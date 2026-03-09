@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Recipe Tracker</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Recipes</a>
+      <a href="#">About</a>
+    </nav>
+    <div class="navbar-actions">
+      <button class="btn-nav-secondary" id="btn-saved">Saved Recipes</button>
+      <button class="btn-nav-primary" id="btn-add">+ Add Recipe</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Your Personal <span class="highlight">Recipe Tracker</span></h1>
+        <p class="tagline">
+          Save, organize, and discover your favorite recipes — all in one place.
+          Whether you're a home cook or a culinary enthusiast, Recipe Tracker
+          helps you keep your kitchen inspiration at your fingertips.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary">Get Started</button>
+          <button class="btn-secondary">Browse Recipes</button>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="recipe-card-preview">
+          <div class="card-emoji">🍝</div>
+          <div class="card-info">
+            <span class="card-title">Spaghetti Carbonara</span>
+            <span class="card-meta">30 min · Easy · Italian</span>
+          </div>
+        </div>
+        <div class="recipe-card-preview">
+          <div class="card-emoji">🥗</div>
+          <div class="card-info">
+            <span class="card-title">Caesar Salad</span>
+            <span class="card-meta">15 min · Easy · American</span>
+          </div>
+        </div>
+        <div class="recipe-card-preview">
+          <div class="card-emoji">🍜</div>
+          <div class="card-info">
+            <span class="card-title">Ramen Noodle Soup</span>
+            <span class="card-meta">45 min · Medium · Japanese</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <h2>Everything you need to manage your recipes</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📖</div>
+          <h3>Save Recipes</h3>
+          <p>Store all your favorite recipes in one organized place, from family classics to new discoveries.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3>Search & Filter</h3>
+          <p>Quickly find any recipe by name, ingredient, cuisine, or cooking time.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📋</div>
+          <h3>Shopping Lists</h3>
+          <p>Automatically generate grocery lists from your chosen recipes for the week.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⭐</div>
+          <h3>Rate & Review</h3>
+          <p>Mark your favorites and leave personal notes to remember what worked best.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Recipe Tracker. Made with ❤️ for food lovers.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
