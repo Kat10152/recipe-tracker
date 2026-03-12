@@ -269,6 +269,338 @@ nav a:hover {
   color: var(--muted);
 }
 
+/* ── Auth Nav ────────────────────────────────────────────── */
+#auth-nav {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--green);
+  text-decoration: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius);
+  transition: background 0.2s;
+}
+
+.nav-user:hover {
+  background: var(--green-pale);
+}
+
+.nav-avatar {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* ── Profile Page ────────────────────────────────────────── */
+.profile-main {
+  min-height: calc(100vh - 130px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  background: var(--green-pale);
+}
+
+.profile-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 8px 32px rgba(58, 125, 68, 0.1);
+}
+
+.profile-avatar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid var(--green);
+  background: var(--green-pale);
+  font-size: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+  line-height: 1;
+}
+
+.profile-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(58, 125, 68, 0.2);
+}
+
+.avatar-edit-badge {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  font-size: 0.9rem;
+  background: var(--white);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+
+.avatar-hint {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+.profile-info {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.profile-name {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+}
+
+.profile-email {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.profile-stats {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+}
+
+.stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0.5rem;
+  border-right: 1px solid var(--border);
+}
+
+.stat:last-child {
+  border-right: none;
+}
+
+.stat-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--green);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 0.3rem;
+  font-weight: 500;
+}
+
+.profile-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin-bottom: 1.75rem;
+}
+
+.profile-form label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--text);
+}
+
+.profile-form input {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  color: var(--text);
+  background: var(--white);
+  margin-bottom: 0.75rem;
+  transition: border-color 0.2s;
+}
+
+.profile-form input:focus {
+  outline: none;
+  border-color: var(--green);
+}
+
+.profile-success {
+  text-align: center;
+  color: var(--green);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+}
+
+/* ── Avatar Picker Grid ──────────────────────────────────── */
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.avatar-option {
+  font-size: 1.75rem;
+  background: var(--card-bg);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  padding: 0.4rem;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.1s;
+  line-height: 1;
+  text-align: center;
+}
+
+.avatar-option:hover {
+  border-color: var(--green-light);
+  transform: scale(1.1);
+}
+
+.avatar-option--selected {
+  border-color: var(--green);
+  background: var(--green-pale);
+}
+
+/* ── Login Page ──────────────────────────────────────────── */
+.auth-main {
+  min-height: calc(100vh - 130px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  background: var(--green-pale);
+}
+
+.auth-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 8px 32px rgba(58, 125, 68, 0.1);
+  text-align: center;
+}
+
+.auth-logo {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.auth-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 1.75rem;
+  color: var(--text);
+}
+
+.auth-tabs {
+  display: flex;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 0.6rem;
+  background: none;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.auth-tab.active {
+  background: var(--green);
+  color: var(--white);
+}
+
+.auth-form {
+  text-align: left;
+}
+
+.auth-form label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  margin-top: 1rem;
+  color: var(--text);
+}
+
+.auth-form label:first-of-type {
+  margin-top: 0;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  color: var(--text);
+  background: var(--white);
+  transition: border-color 0.2s;
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: var(--green);
+}
+
+.auth-form .btn-full {
+  margin-top: 1.25rem;
+}
+
+.auth-switch {
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 1rem;
+}
+
+.auth-switch a {
+  color: var(--green);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
 /* ── Active Nav Link ────────────────────────────────────── */
 nav a.nav-active {
   color: var(--green);
@@ -687,6 +1019,54 @@ nav a.nav-active {
 
 .btn-delete:hover {
   background: #fdf0ef;
+}
+
+/* ── Stars ───────────────────────────────────────────────── */
+.stars-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.star-btn {
+  font-size: 1.75rem;
+  color: var(--border);
+  cursor: pointer;
+  transition: color 0.15s, transform 0.1s;
+  line-height: 1;
+  user-select: none;
+}
+
+.star-btn--filled,
+.star-btn--hover {
+  color: #f5a623;
+}
+
+.star-btn:hover {
+  transform: scale(1.15);
+}
+
+.stars-label {
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.card-stars {
+  margin-top: 0.35rem;
+  display: flex;
+  gap: 1px;
+}
+
+.star-display {
+  font-size: 0.85rem;
+  color: var(--border);
+  line-height: 1;
+}
+
+.star-display--filled {
+  color: #f5a623;
 }
 
 .detail-save-btn svg {

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile — Recipe Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Recipe Tracker</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="recipes.html">Recipes</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="navbar-actions">
+      <button class="btn-nav-secondary" onclick="window.location.href='saved.html'">Saved Recipes</button>
+      <div id="auth-nav"></div>
+    </div>
+  </header>
+
+  <main class="profile-main">
+
+    <div class="profile-card">
+
+      <!-- Avatar -->
+      <div class="profile-avatar-wrap">
+        <button class="profile-avatar" id="avatar-display" onclick="openAvatarPicker()" title="Change avatar">
+          <span id="avatar-emoji">🧑‍🍳</span>
+          <span class="avatar-edit-badge">✏️</span>
+        </button>
+        <p class="avatar-hint">Click to change avatar</p>
+      </div>
+
+      <!-- Name & Email -->
+      <div class="profile-info">
+        <h1 id="profile-name" class="profile-name">Loading…</h1>
+        <p id="profile-email" class="profile-email"></p>
+      </div>
+
+      <!-- Stats -->
+      <div class="profile-stats">
+        <div class="stat">
+          <span class="stat-value" id="stat-saved">—</span>
+          <span class="stat-label">Saved</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="stat-created">—</span>
+          <span class="stat-label">Created</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="stat-rated">—</span>
+          <span class="stat-label">Rated</span>
+        </div>
+      </div>
+
+      <hr class="profile-divider" />
+
+      <!-- Edit Name -->
+      <form id="profile-form" class="profile-form" novalidate>
+        <label for="edit-name">Display Name</label>
+        <input type="text" id="edit-name" maxlength="50" placeholder="Your name" />
+        <p class="form-error hidden" id="profile-error"></p>
+        <button type="submit" class="btn-primary btn-full" id="save-profile-btn">Save Changes</button>
+        <p class="profile-success hidden" id="profile-success">✓ Profile updated!</p>
+      </form>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Recipe Tracker. Made with ❤️ for food lovers.</p>
+  </footer>
+
+  <!-- Avatar Picker Modal -->
+  <div class="modal-overlay hidden" id="avatar-overlay">
+    <div class="modal">
+      <button class="modal-close" id="avatar-modal-close" aria-label="Close">&times;</button>
+      <h2>Choose Your Avatar</h2>
+      <div class="avatar-grid" id="avatar-grid"></div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="db.js"></script>
+  <script src="data.js"></script>
+  <script src="auth.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>

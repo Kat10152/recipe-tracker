@@ -1,5 +1,5 @@
 // ── In-memory cache ───────────────────────────────────────
-let userData = { savedRecipes: [], userRecipes: [], ratings: {} };
+let userData = { savedRecipes: [], userRecipes: [], ratings: {}, avatar: '🧑‍🍳' };
 
 // Listeners registered by page scripts via onDataLoaded()
 const _renderListeners = [];
@@ -25,16 +25,16 @@ async function loadUserData(uid) {
     const snap = await db.collection('users').doc(uid).get();
     userData = snap.exists
       ? { savedRecipes: [], userRecipes: [], ratings: {}, ...snap.data() }
-      : { savedRecipes: [], userRecipes: [], ratings: {} };
+      : { savedRecipes: [], userRecipes: [], ratings: {}, avatar: '🧑‍🍳' };
   } catch (e) {
     console.error('Failed to load user data:', e);
-    userData = { savedRecipes: [], userRecipes: [], ratings: {} };
+    userData = { savedRecipes: [], userRecipes: [], ratings: {}, avatar: '🧑‍🍳' };
   }
   _triggerRender();
 }
 
 function resetUserData() {
-  userData = { savedRecipes: [], userRecipes: [], ratings: {} };
+  userData = { savedRecipes: [], userRecipes: [], ratings: {}, avatar: '🧑‍🍳' };
   _triggerRender();
 }
 
