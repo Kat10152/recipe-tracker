@@ -28,10 +28,6 @@ document.querySelector('.btn-secondary').addEventListener('click', () => {
 });
 
 // Navbar buttons
-document.getElementById('btn-add').addEventListener('click', () => {
-  alert('Add Recipe — coming soon!');
-});
-
 document.getElementById('btn-saved').addEventListener('click', () => {
   window.location.href = 'saved.html';
 });
