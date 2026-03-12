@@ -9,10 +9,12 @@ Plannes features
 3.	View recipe details (core feature)
 4.	Delete recipes (core feature)
 5.	Search recipes (core feature)
-6.  Review recipes (core feature)
+6.  Review recipes (additional feature)
 7.	Save favorites (date persistence)
 8.	Responsive layout (rubric requirement)
 9.	Deployed to Netlify (deployment)
+10. User authentication
+11. Cloud storage using friebase
 
 
 Project Structure
