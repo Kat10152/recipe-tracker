@@ -15,6 +15,7 @@ Plannes features
 9.	Deployed to Netlify (deployment)
 10. User authentication
 11. Cloud storage using friebase
+12. Customizable user avatar (additional feature)
 
 
 Project Structure
