@@ -1,8 +1,8 @@
-// getSaved, getUserRecipes, getAllRecipes loaded from data.js
+// getSaved, getUserRecipes, getAllRecipes, getRatings, syncUserData loaded from db.js
 
 function unsave(id) {
-  const saved = getSaved().filter(s => s !== id);
-  localStorage.setItem('savedRecipes', JSON.stringify(saved));
+  userData.savedRecipes = userData.savedRecipes.filter(s => s !== id);
+  syncUserData();
   render();
 }
 
@@ -14,6 +14,7 @@ function bookmarkSVG() {
 
 function cardHTML(r) {
   const timeTag = r.time ? `<span class="tag">⏱ ${r.time}</span>` : '';
+  const rating  = getRatings()[r.id] || 0;
   return `
     <div class="recipe-card recipe-card--saved" onclick="openDetail('${r.id}')">
       <div class="recipe-card-emoji">${r.emoji || '🍽️'}</div>
@@ -24,6 +25,7 @@ function cardHTML(r) {
           <span class="tag tag--${r.difficulty.toLowerCase()}">${r.difficulty}</span>
           ${timeTag}
         </div>
+        ${rating ? `<div class="card-stars">${displayStarsHTML(rating)}</div>` : ''}
       </div>
       <button
         class="save-btn save-btn--saved"
@@ -36,23 +38,25 @@ function cardHTML(r) {
 }
 
 function render() {
-  const savedIds = getSaved();
-  const all = getAllRecipes();
+  const savedIds     = getSaved();
+  const all          = getAllRecipes();
   const savedRecipes = savedIds.map(id => all.find(r => r.id === id)).filter(Boolean);
 
-  const myRecipes = savedRecipes.filter(r => r.userCreated);
+  const myRecipes  = savedRecipes.filter(r =>  r.userCreated);
   const bookmarked = savedRecipes.filter(r => !r.userCreated);
 
-  const empty = document.getElementById('empty-state');
-  const count = document.getElementById('saved-count');
-  const mySection = document.getElementById('my-recipes-section');
+  const empty       = document.getElementById('empty-state');
+  const count       = document.getElementById('saved-count');
+  const mySection   = document.getElementById('my-recipes-section');
   const savedSection = document.getElementById('saved-section');
 
   if (savedRecipes.length === 0) {
     mySection.classList.add('hidden');
     savedSection.classList.add('hidden');
     empty.classList.remove('hidden');
-    count.textContent = 'Your bookmarked recipes, all in one place.';
+    count.textContent = auth.currentUser
+      ? 'Your bookmarked recipes, all in one place.'
+      : 'Log in to save and view your recipes.';
     return;
   }
 
@@ -75,4 +79,4 @@ function render() {
   }
 }
 
-render();
+onDataLoaded(render);

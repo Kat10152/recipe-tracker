@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log In — Recipe Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Recipe Tracker</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="recipes.html">Recipes</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="navbar-actions">
+      <button class="btn-nav-secondary" onclick="window.location.href='saved.html'">Saved Recipes</button>
+      <div id="auth-nav"></div>
+    </div>
+  </header>
+
+  <main class="auth-main">
+    <div class="auth-card">
+      <div class="auth-logo">🍽️</div>
+      <h1 class="auth-title">Welcome to Recipe Tracker</h1>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Log In</button>
+        <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form" novalidate>
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="you@example.com" required />
+
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="Enter your password" required />
+
+        <p class="form-error hidden" id="login-error"></p>
+        <button type="submit" class="btn-primary btn-full" id="login-submit">Log In</button>
+
+        <p class="auth-switch">Don't have an account? <a href="#" onclick="switchTab('signup')">Sign Up</a></p>
+      </form>
+
+      <!-- Sign Up Form -->
+      <form id="signup-form" class="auth-form hidden" novalidate>
+        <label for="signup-name">Full Name</label>
+        <input type="text" id="signup-name" placeholder="Your name" maxlength="50" required />
+
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" placeholder="you@example.com" required />
+
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" placeholder="Create a password (min. 6 characters)" required />
+
+        <label for="signup-confirm">Confirm Password</label>
+        <input type="password" id="signup-confirm" placeholder="Repeat your password" required />
+
+        <p class="form-error hidden" id="signup-error"></p>
+        <button type="submit" class="btn-primary btn-full" id="signup-submit">Create Account</button>
+
+        <p class="auth-switch">Already have an account? <a href="#" onclick="switchTab('login')">Log In</a></p>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Recipe Tracker. Made with ❤️ for food lovers.</p>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="db.js"></script>
+  <script src="data.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    // If already logged in, redirect away
+    auth.onAuthStateChanged((user) => {
+      if (user) window.location.href = 'index.html';
+    });
+
+    function switchTab(tab) {
+      const isLogin = tab === 'login';
+      document.getElementById('login-form').classList.toggle('hidden', !isLogin);
+      document.getElementById('signup-form').classList.toggle('hidden', isLogin);
+      document.getElementById('tab-login').classList.toggle('active', isLogin);
+      document.getElementById('tab-signup').classList.toggle('active', !isLogin);
+      document.getElementById('login-error').classList.add('hidden');
+      document.getElementById('signup-error').classList.add('hidden');
+    }
+
+    if (new URLSearchParams(window.location.search).get('tab') === 'signup') {
+      switchTab('signup');
+    }
+
+    // ── Login ─────────────────────────────────────────────
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email    = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const errorEl  = document.getElementById('login-error');
+      const btn      = document.getElementById('login-submit');
+
+      btn.disabled     = true;
+      btn.textContent  = 'Logging in…';
+      errorEl.classList.add('hidden');
+
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+        window.location.href = 'index.html';
+      } catch (err) {
+        errorEl.textContent = friendlyError(err.code);
+        errorEl.classList.remove('hidden');
+        btn.disabled    = false;
+        btn.textContent = 'Log In';
+      }
+    });
+
+    // ── Sign Up ───────────────────────────────────────────
+    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name     = document.getElementById('signup-name').value.trim();
+      const email    = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const confirm  = document.getElementById('signup-confirm').value;
+      const errorEl  = document.getElementById('signup-error');
+      const btn      = document.getElementById('signup-submit');
+
+      if (password !== confirm) {
+        errorEl.textContent = 'Passwords do not match.';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+
+      btn.disabled    = true;
+      btn.textContent = 'Creating account…';
+      errorEl.classList.add('hidden');
+
+      try {
+        const cred = await auth.createUserWithEmailAndPassword(email, password);
+        await cred.user.updateProfile({ displayName: name });
+        // Create empty user document in Firestore
+        await db.collection('users').doc(cred.user.uid).set({
+          name,
+          savedRecipes: [],
+          userRecipes:  [],
+          ratings:      {},
+        });
+        window.location.href = 'index.html';
+      } catch (err) {
+        errorEl.textContent = friendlyError(err.code);
+        errorEl.classList.remove('hidden');
+        btn.disabled    = false;
+        btn.textContent = 'Create Account';
+      }
+    });
+
+    function friendlyError(code) {
+      const map = {
+        'auth/invalid-email':          'Please enter a valid email address.',
+        'auth/user-not-found':         'No account found with that email.',
+        'auth/wrong-password':         'Incorrect password. Please try again.',
+        'auth/email-already-in-use':   'An account with this email already exists.',
+        'auth/weak-password':          'Password must be at least 6 characters.',
+        'auth/too-many-requests':      'Too many attempts. Please try again later.',
+        'auth/invalid-credential':     'Incorrect email or password.',
+      };
+      return map[code] || 'Something went wrong. Please try again.';
+    }
+  </script>
+</body>
+</html>

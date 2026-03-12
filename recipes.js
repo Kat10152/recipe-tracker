@@ -1,14 +1,14 @@
-// getSaved, getUserRecipes, getAllRecipes loaded from data.js
+// getSaved, getUserRecipes, getAllRecipes, getRatings, syncUserData loaded from db.js
 
 function toggleSave(id) {
-  const saved = getSaved();
-  const index = saved.indexOf(id);
-  if (index === -1) {
-    saved.push(id);
+  if (!requireAuth()) return;
+  const idx = userData.savedRecipes.indexOf(id);
+  if (idx === -1) {
+    userData.savedRecipes.push(id);
   } else {
-    saved.splice(index, 1);
+    userData.savedRecipes.splice(idx, 1);
   }
-  localStorage.setItem('savedRecipes', JSON.stringify(saved));
+  syncUserData();
   renderCards();
 }
 
@@ -19,19 +19,20 @@ function bookmarkSVG() {
 }
 
 function renderCards() {
-  const query = document.getElementById('search').value.toLowerCase();
-  const cuisine = document.getElementById('filter-cuisine').value;
+  const query      = document.getElementById('search').value.toLowerCase();
+  const cuisine    = document.getElementById('filter-cuisine').value;
   const difficulty = document.getElementById('filter-difficulty').value;
-  const saved = getSaved();
+  const saved      = getSaved();
+  const ratings    = getRatings();
 
   const filtered = getAllRecipes().filter(r => {
-    const matchesSearch = r.name.toLowerCase().includes(query) || r.cuisine.toLowerCase().includes(query);
-    const matchesCuisine = !cuisine || r.cuisine === cuisine;
+    const matchesSearch     = r.name.toLowerCase().includes(query) || r.cuisine.toLowerCase().includes(query);
+    const matchesCuisine    = !cuisine    || r.cuisine    === cuisine;
     const matchesDifficulty = !difficulty || r.difficulty === difficulty;
     return matchesSearch && matchesCuisine && matchesDifficulty;
   });
 
-  const grid = document.getElementById('recipes-grid');
+  const grid      = document.getElementById('recipes-grid');
   const noResults = document.getElementById('no-results');
 
   if (filtered.length === 0) {
@@ -44,6 +45,7 @@ function renderCards() {
   grid.innerHTML = filtered.map(r => {
     const isSaved = saved.includes(r.id);
     const timeTag = r.time ? `<span class="tag">⏱ ${r.time}</span>` : '';
+    const rating  = ratings[r.id] || 0;
     return `
       <div class="recipe-card ${isSaved ? 'recipe-card--saved' : ''}" onclick="openDetail('${r.id}')">
         <div class="recipe-card-emoji">${r.emoji || '🍽️'}</div>
@@ -55,6 +57,7 @@ function renderCards() {
             <span class="tag tag--${r.difficulty.toLowerCase()}">${r.difficulty}</span>
             ${timeTag}
           </div>
+          ${rating ? `<div class="card-stars">${displayStarsHTML(rating)}</div>` : ''}
         </div>
         <button
           class="save-btn ${isSaved ? 'save-btn--saved' : ''}"
@@ -67,10 +70,11 @@ function renderCards() {
   }).join('');
 }
 
-// ── Modal ────────────────────────────────────────────────
+// ── Create Recipe Modal ───────────────────────────────────
 const overlay = document.getElementById('modal-overlay');
 
 function openModal() {
+  if (!requireAuth()) return;
   overlay.classList.remove('hidden');
   document.getElementById('r-name').focus();
 }
@@ -97,44 +101,38 @@ document.getElementById('create-recipe-form').addEventListener('submit', (e) => 
   }
 
   const ingredientsRaw = document.getElementById('r-ingredients').value.trim();
-  const stepsRaw = document.getElementById('r-steps').value.trim();
+  const stepsRaw       = document.getElementById('r-steps').value.trim();
 
-  const userRecipes = getUserRecipes();
   const newRecipe = {
-    id: 'u_' + Date.now(),
+    id:          'u_' + Date.now(),
     name,
-    emoji:        document.getElementById('r-emoji').value.trim() || '🍽️',
-    cuisine:      document.getElementById('r-cuisine').value,
-    difficulty:   document.getElementById('r-difficulty').value,
-    time:         document.getElementById('r-time').value.trim(),
-    servings:     document.getElementById('r-servings').value.trim(),
-    description:  document.getElementById('r-description').value.trim(),
-    ingredients:  ingredientsRaw ? ingredientsRaw.split('\n').map(l => l.trim()).filter(Boolean) : [],
-    steps:        stepsRaw ? stepsRaw.split('\n').map(l => l.trim()).filter(Boolean) : [],
+    emoji:       document.getElementById('r-emoji').value.trim() || '🍽️',
+    cuisine:     document.getElementById('r-cuisine').value,
+    difficulty:  document.getElementById('r-difficulty').value,
+    time:        document.getElementById('r-time').value.trim(),
+    servings:    document.getElementById('r-servings').value.trim(),
+    description: document.getElementById('r-description').value.trim(),
+    ingredients: ingredientsRaw ? ingredientsRaw.split('\n').map(l => l.trim()).filter(Boolean) : [],
+    steps:       stepsRaw       ? stepsRaw.split('\n').map(l => l.trim()).filter(Boolean)       : [],
     userCreated: true,
   };
 
-  userRecipes.unshift(newRecipe);
-  localStorage.setItem('userRecipes', JSON.stringify(userRecipes));
-
-  // Auto-save the new recipe
-  const saved = getSaved();
-  saved.push(newRecipe.id);
-  localStorage.setItem('savedRecipes', JSON.stringify(saved));
+  userData.userRecipes.unshift(newRecipe);
+  userData.savedRecipes.push(newRecipe.id);
+  syncUserData();
 
   closeModal();
   renderCards();
 });
 
-// ── Filters ──────────────────────────────────────────────
+// ── Filters ───────────────────────────────────────────────
 document.getElementById('search').addEventListener('input', renderCards);
 document.getElementById('filter-cuisine').addEventListener('change', renderCards);
 document.getElementById('filter-difficulty').addEventListener('change', renderCards);
 
 document.getElementById('btn-add').addEventListener('click', openModal);
-
 document.getElementById('btn-saved').addEventListener('click', () => {
   window.location.href = 'saved.html';
 });
 
-renderCards();
+onDataLoaded(renderCards);

@@ -97,14 +97,4 @@ const RECIPES = [
   },
 ];
 
-function getUserRecipes() {
-  return JSON.parse(localStorage.getItem('userRecipes') || '[]');
-}
-
-function getAllRecipes() {
-  return [...getUserRecipes(), ...RECIPES];
-}
-
-function getSaved() {
-  return JSON.parse(localStorage.getItem('savedRecipes') || '[]');
-}
+// getSaved, getUserRecipes, getAllRecipes, getRatings defined in db.js

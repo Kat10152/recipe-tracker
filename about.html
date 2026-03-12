@@ -17,7 +17,7 @@
     </nav>
     <div class="navbar-actions">
       <button class="btn-nav-secondary" onclick="window.location.href='saved.html'">Saved Recipes</button>
-      <button class="btn-nav-primary" onclick="window.location.href='recipes.html'">+ Add Recipe</button>
+      <div id="auth-nav"></div>
     </div>
   </header>
 
@@ -67,5 +67,11 @@
     <p>&copy; 2026 Recipe Tracker. Made with ❤️ for food lovers.</p>
   </footer>
 
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="db.js"></script>
+  <script src="auth.js"></script>
 </body>
 </html>
