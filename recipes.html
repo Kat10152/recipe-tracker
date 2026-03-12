@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse Recipes — Recipe Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Recipe Tracker</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="recipes.html" class="nav-active">Recipes</a>
+      <a href="#">About</a>
+    </nav>
+    <div class="navbar-actions">
+      <button class="btn-nav-secondary" id="btn-saved">Saved Recipes</button>
+      <button class="btn-nav-primary" id="btn-add">+ Add Recipe</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="recipes-header">
+      <h1>Browse Recipes</h1>
+      <p>Discover something delicious. Click the bookmark to save a recipe for later.</p>
+      <div class="recipes-filters">
+        <input type="text" id="search" placeholder="Search recipes..." class="search-input" />
+        <select id="filter-cuisine" class="filter-select">
+          <option value="">All Cuisines</option>
+          <option value="Italian">Italian</option>
+          <option value="Japanese">Japanese</option>
+          <option value="Mexican">Mexican</option>
+          <option value="American">American</option>
+          <option value="Indian">Indian</option>
+          <option value="Thai">Thai</option>
+          <option value="French">French</option>
+        </select>
+        <select id="filter-difficulty" class="filter-select">
+          <option value="">All Levels</option>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="recipes-grid-section">
+      <div class="recipes-grid" id="recipes-grid"></div>
+      <p class="no-results hidden" id="no-results">No recipes match your search.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Recipe Tracker. Made with ❤️ for food lovers.</p>
+  </footer>
+
+  <script src="recipes.js"></script>
+</body>
+</html>

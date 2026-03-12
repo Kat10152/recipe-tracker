@@ -24,7 +24,7 @@ document.querySelector('.btn-primary').addEventListener('click', () => {
 });
 
 document.querySelector('.btn-secondary').addEventListener('click', () => {
-  alert('Browse Recipes — coming soon!');
+  window.location.href = 'recipes.html';
 });
 
 // Navbar buttons
