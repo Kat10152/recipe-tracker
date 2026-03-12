@@ -1,15 +1,10 @@
-// ─────────────────────────────────────────────────────────
-// Replace the values below with your own Firebase project config.
-// Get them from: Firebase Console → Project Settings → Your apps
-// https://console.firebase.google.com
-// ─────────────────────────────────────────────────────────
 const firebaseConfig = {
-  apiKey:            "YOUR_API_KEY",
-  authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId:         "YOUR_PROJECT_ID",
-  storageBucket:     "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId:             "YOUR_APP_ID",
+  apiKey:            "AIzaSyDxEh_ze44ipPjhWNw5UmBxlrSfpQls5Ac",
+  authDomain:        "recipetracker-c0634.firebaseapp.com",
+  projectId:         "recipetracker-c0634",
+  storageBucket:     "recipetracker-c0634.firebasestorage.app",
+  messagingSenderId: "665778900400",
+  appId:             "1:665778900400:web:7664b43b6ae4b1fd77da75",
 };
 
 firebase.initializeApp(firebaseConfig);
