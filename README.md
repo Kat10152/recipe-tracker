@@ -1,8 +1,8 @@
 Project Description
 
-My website is a recipe trackker that allows users to save, organize, and view their favorited recipes. This will help users to keep track of their favorite recipes and also find new ones.
+My website is a recipe tracker that allows users to search for recipes, save recipes, create custom recipes, and rate recipes they have tried. This will help users to keep track of their favorite recipes and also find new ones.
 
-Plannes features
+Planned features
 
 1.	Add recipes (core feature)
 2.	Recipe list (core feature)
@@ -12,7 +12,7 @@ Plannes features
 6.  Review recipes (additional feature)
 7.	Save favorites (date persistence)
 8.	Responsive layout (rubric requirement)
-9.	Deployed to Netlify (deployment)
+9.	Deployed to Vercel (deployment)
 10. User authentication
 11. Cloud storage using friebase
 12. Customizable user avatar (additional feature)
@@ -29,8 +29,20 @@ recipetracker/
 └── README.md
 ```
 
-Tech Stack
+Technologies used:
 
-- HTML5
-- CSS3 (custom properties, CSS Grid, Flexbox)
-- Vanilla JavaScript
+- HTML
+- CSS
+- JavaScript
+- Firebase authentication
+- Git and Github
+- Vercel for deployment
+- Claude for development
+
+What I learned:
+
+I learned how much AI can assist with the development process for a site. Using Claude help me to quickly and efficiently design and development and then helped me add authentication using firebase. This project helped me learn a bit more about how cloud databases work and how to make one.
+
+Architecture Overview:
+
+The frontend of the site is built using HTML, CSS, and javascript. The backend is handeled using firebase services. Firebase authentication handles the user logins.
