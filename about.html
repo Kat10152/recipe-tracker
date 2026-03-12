@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Recipe Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Recipe Tracker</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="recipes.html">Recipes</a>
+      <a href="about.html" class="nav-active">About</a>
+    </nav>
+    <div class="navbar-actions">
+      <button class="btn-nav-secondary" onclick="window.location.href='saved.html'">Saved Recipes</button>
+      <button class="btn-nav-primary" onclick="window.location.href='recipes.html'">+ Add Recipe</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="about-hero">
+      <div class="about-hero-content">
+        <h1>About <span class="highlight">Recipe Tracker</span></h1>
+        <p>A simple, personal space to save, browse, and create the recipes you love.</p>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-icon">🥗</div>
+          <h3>What is Recipe Tracker?</h3>
+          <p>Recipe Tracker is a lightweight tool for home cooks and food lovers. Browse a growing collection of recipes, save your favourites, and add your own creations — all stored right in your browser with no sign-up required.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">🔖</div>
+          <h3>Save What You Love</h3>
+          <p>Found a recipe you want to come back to? Hit the bookmark icon and it's saved instantly. Your saved recipes stay in your browser so they're always there when you need them.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">✏️</div>
+          <h3>Add Your Own Recipes</h3>
+          <p>Have a family recipe or a personal creation you want to keep handy? Use the "Create Your Own Recipe" button on the recipes page to add it to your collection.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">🔍</div>
+          <h3>Search & Filter</h3>
+          <p>Looking for something specific? Search by recipe name or cuisine, and filter by difficulty or cuisine type to quickly find exactly what you're in the mood to cook.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-cta">
+      <h2>Ready to get cooking?</h2>
+      <p>Start browsing recipes or add one of your own.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="window.location.href='recipes.html'">Browse Recipes</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Recipe Tracker. Made with ❤️ for food lovers.</p>
+  </footer>
+
+</body>
+</html>

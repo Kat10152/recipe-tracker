@@ -13,7 +13,7 @@
     <nav>
       <a href="index.html">Home</a>
       <a href="recipes.html" class="nav-active">Recipes</a>
-      <a href="#">About</a>
+      <a href="about.html">About</a>
     </nav>
     <div class="navbar-actions">
       <button class="btn-nav-secondary" id="btn-saved">Saved Recipes</button>
@@ -25,6 +25,7 @@
     <section class="recipes-header">
       <h1>Browse Recipes</h1>
       <p>Discover something delicious. Click the bookmark to save a recipe for later.</p>
+      <button class="btn-primary btn-create" id="btn-create-recipe">+ Create Your Own Recipe</button>
       <div class="recipes-filters">
         <input type="text" id="search" placeholder="Search recipes..." class="search-input" />
         <select id="filter-cuisine" class="filter-select">
@@ -56,6 +57,48 @@
     <p>&copy; 2026 Recipe Tracker. Made with ❤️ for food lovers.</p>
   </footer>
 
+  <!-- Create Recipe Modal -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal">
+      <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      <h2>Create Your Own Recipe</h2>
+      <form id="create-recipe-form" novalidate>
+        <label for="r-name">Recipe Name <span class="required">*</span></label>
+        <input type="text" id="r-name" placeholder="e.g. Grandma's Soup" maxlength="60" required />
+
+        <label for="r-emoji">Emoji Icon</label>
+        <input type="text" id="r-emoji" placeholder="🍲" maxlength="2" />
+        <span class="field-hint">Paste any food emoji</span>
+
+        <label for="r-cuisine">Cuisine</label>
+        <select id="r-cuisine">
+          <option value="Other">Other</option>
+          <option value="Italian">Italian</option>
+          <option value="Japanese">Japanese</option>
+          <option value="Mexican">Mexican</option>
+          <option value="American">American</option>
+          <option value="Indian">Indian</option>
+          <option value="Thai">Thai</option>
+          <option value="French">French</option>
+        </select>
+
+        <label for="r-difficulty">Difficulty</label>
+        <select id="r-difficulty">
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select>
+
+        <label for="r-time">Cook Time</label>
+        <input type="text" id="r-time" placeholder="e.g. 30 min" maxlength="20" />
+
+        <p class="form-error hidden" id="form-error">Please enter a recipe name.</p>
+        <button type="submit" class="btn-primary btn-full">Save Recipe</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
   <script src="recipes.js"></script>
 </body>
 </html>

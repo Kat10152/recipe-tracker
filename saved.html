@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saved Recipes — Recipe Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Recipe Tracker</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="recipes.html">Recipes</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="navbar-actions">
+      <button class="btn-nav-secondary nav-active-btn">Saved Recipes</button>
+      <button class="btn-nav-primary" onclick="window.location.href='recipes.html'">+ Add Recipe</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="recipes-header">
+      <h1>Saved Recipes</h1>
+      <p id="saved-count">Your bookmarked recipes, all in one place.</p>
+    </section>
+
+    <section class="recipes-grid-section">
+      <div class="recipes-grid" id="saved-grid"></div>
+
+      <div class="empty-state hidden" id="empty-state">
+        <div class="empty-icon">🔖</div>
+        <h3>No saved recipes yet</h3>
+        <p>Browse recipes and click the bookmark icon to save ones you love.</p>
+        <button class="btn-primary" onclick="window.location.href='recipes.html'">Browse Recipes</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Recipe Tracker. Made with ❤️ for food lovers.</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="saved.js"></script>
+</body>
+</html>

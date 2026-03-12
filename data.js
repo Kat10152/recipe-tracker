@@ -1,0 +1,18 @@
+const RECIPES = [
+  { id: '1',  emoji: '🍝', name: 'Spaghetti Carbonara',      time: '30 min', difficulty: 'Easy',   cuisine: 'Italian'  },
+  { id: '2',  emoji: '🍜', name: 'Ramen Noodle Soup',        time: '45 min', difficulty: 'Medium', cuisine: 'Japanese' },
+  { id: '3',  emoji: '🥗', name: 'Caesar Salad',             time: '15 min', difficulty: 'Easy',   cuisine: 'American' },
+  { id: '4',  emoji: '🌮', name: 'Beef Tacos',               time: '25 min', difficulty: 'Easy',   cuisine: 'Mexican'  },
+  { id: '5',  emoji: '🍛', name: 'Chicken Tikka Masala',     time: '50 min', difficulty: 'Medium', cuisine: 'Indian'   },
+  { id: '6',  emoji: '🍕', name: 'Margherita Pizza',         time: '40 min', difficulty: 'Medium', cuisine: 'Italian'  },
+  { id: '7',  emoji: '🥘', name: 'Pad Thai',                 time: '30 min', difficulty: 'Medium', cuisine: 'Thai'     },
+  { id: '8',  emoji: '🥩', name: 'Classic Beef Burger',      time: '20 min', difficulty: 'Easy',   cuisine: 'American' },
+  { id: '9',  emoji: '🍣', name: 'Salmon Sushi Rolls',       time: '60 min', difficulty: 'Hard',   cuisine: 'Japanese' },
+  { id: '10', emoji: '🥐', name: 'Croissants',               time: '3 hrs',  difficulty: 'Hard',   cuisine: 'French'   },
+  { id: '11', emoji: '🌯', name: 'Chicken Burrito Bowl',     time: '35 min', difficulty: 'Easy',   cuisine: 'Mexican'  },
+  { id: '12', emoji: '🍲', name: 'Lentil Dal',               time: '40 min', difficulty: 'Easy',   cuisine: 'Indian'   },
+  { id: '13', emoji: '🍝', name: 'Pesto Pasta',              time: '20 min', difficulty: 'Easy',   cuisine: 'Italian'  },
+  { id: '14', emoji: '🦞', name: 'Lobster Bisque',           time: '1 hr',   difficulty: 'Hard',   cuisine: 'French'   },
+  { id: '15', emoji: '🍜', name: 'Green Curry',              time: '35 min', difficulty: 'Medium', cuisine: 'Thai'     },
+  { id: '16', emoji: '🧆', name: 'Falafel Wrap',             time: '30 min', difficulty: 'Medium', cuisine: 'American' },
+];

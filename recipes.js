@@ -1,21 +1,12 @@
-const RECIPES = [
-  { id: 1,  emoji: '🍝', name: 'Spaghetti Carbonara',      time: '30 min', difficulty: 'Easy',   cuisine: 'Italian'  },
-  { id: 2,  emoji: '🍜', name: 'Ramen Noodle Soup',        time: '45 min', difficulty: 'Medium', cuisine: 'Japanese' },
-  { id: 3,  emoji: '🥗', name: 'Caesar Salad',             time: '15 min', difficulty: 'Easy',   cuisine: 'American' },
-  { id: 4,  emoji: '🌮', name: 'Beef Tacos',               time: '25 min', difficulty: 'Easy',   cuisine: 'Mexican'  },
-  { id: 5,  emoji: '🍛', name: 'Chicken Tikka Masala',     time: '50 min', difficulty: 'Medium', cuisine: 'Indian'   },
-  { id: 6,  emoji: '🍕', name: 'Margherita Pizza',         time: '40 min', difficulty: 'Medium', cuisine: 'Italian'  },
-  { id: 7,  emoji: '🥘', name: 'Pad Thai',                 time: '30 min', difficulty: 'Medium', cuisine: 'Thai'     },
-  { id: 8,  emoji: '🥩', name: 'Classic Beef Burger',      time: '20 min', difficulty: 'Easy',   cuisine: 'American' },
-  { id: 9,  emoji: '🍣', name: 'Salmon Sushi Rolls',       time: '60 min', difficulty: 'Hard',   cuisine: 'Japanese' },
-  { id: 10, emoji: '🥐', name: 'Croissants',               time: '3 hrs',  difficulty: 'Hard',   cuisine: 'French'   },
-  { id: 11, emoji: '🌯', name: 'Chicken Burrito Bowl',     time: '35 min', difficulty: 'Easy',   cuisine: 'Mexican'  },
-  { id: 12, emoji: '🍲', name: 'Lentil Dal',               time: '40 min', difficulty: 'Easy',   cuisine: 'Indian'   },
-  { id: 13, emoji: '🍝', name: 'Pesto Pasta',              time: '20 min', difficulty: 'Easy',   cuisine: 'Italian'  },
-  { id: 14, emoji: '🦞', name: 'Lobster Bisque',           time: '1 hr',   difficulty: 'Hard',   cuisine: 'French'   },
-  { id: 15, emoji: '🍜', name: 'Green Curry',              time: '35 min', difficulty: 'Medium', cuisine: 'Thai'     },
-  { id: 16, emoji: '🧆', name: 'Falafel Wrap',             time: '30 min', difficulty: 'Medium', cuisine: 'American' },
-];
+// RECIPES loaded from data.js
+
+function getUserRecipes() {
+  return JSON.parse(localStorage.getItem('userRecipes') || '[]');
+}
+
+function getAllRecipes() {
+  return [...getUserRecipes(), ...RECIPES];
+}
 
 function getSaved() {
   return JSON.parse(localStorage.getItem('savedRecipes') || '[]');
@@ -33,13 +24,19 @@ function toggleSave(id) {
   renderCards();
 }
 
+function bookmarkSVG() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+    <path d="M5 3h14a1 1 0 0 1 1 1v17l-8-4-8 4V4a1 1 0 0 1 1-1z"/>
+  </svg>`;
+}
+
 function renderCards() {
   const query = document.getElementById('search').value.toLowerCase();
   const cuisine = document.getElementById('filter-cuisine').value;
   const difficulty = document.getElementById('filter-difficulty').value;
   const saved = getSaved();
 
-  const filtered = RECIPES.filter(r => {
+  const filtered = getAllRecipes().filter(r => {
     const matchesSearch = r.name.toLowerCase().includes(query) || r.cuisine.toLowerCase().includes(query);
     const matchesCuisine = !cuisine || r.cuisine === cuisine;
     const matchesDifficulty = !difficulty || r.difficulty === difficulty;
@@ -58,42 +55,89 @@ function renderCards() {
 
   grid.innerHTML = filtered.map(r => {
     const isSaved = saved.includes(r.id);
+    const timeTag = r.time ? `<span class="tag">⏱ ${r.time}</span>` : '';
     return `
       <div class="recipe-card ${isSaved ? 'recipe-card--saved' : ''}">
-        <div class="recipe-card-emoji">${r.emoji}</div>
+        <div class="recipe-card-emoji">${r.emoji || '🍽️'}</div>
         <div class="recipe-card-body">
           <h3 class="recipe-card-title">${r.name}</h3>
           <div class="recipe-card-tags">
+            ${r.userCreated ? '<span class="tag tag--custom">My Recipe</span>' : ''}
             <span class="tag">${r.cuisine}</span>
             <span class="tag tag--diff tag--${r.difficulty.toLowerCase()}">${r.difficulty}</span>
-            <span class="tag">⏱ ${r.time}</span>
+            ${timeTag}
           </div>
         </div>
         <button
           class="save-btn ${isSaved ? 'save-btn--saved' : ''}"
-          onclick="toggleSave(${r.id})"
+          onclick="toggleSave('${r.id}')"
           title="${isSaved ? 'Remove from saved' : 'Save recipe'}"
           aria-label="${isSaved ? 'Remove from saved' : 'Save recipe'}"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-            <path d="M5 3h14a1 1 0 0 1 1 1v17l-8-4-8 4V4a1 1 0 0 1 1-1z"/>
-          </svg>
-        </button>
+        >${bookmarkSVG()}</button>
       </div>
     `;
   }).join('');
 }
 
+// ── Modal ────────────────────────────────────────────────
+const overlay = document.getElementById('modal-overlay');
+
+function openModal() {
+  overlay.classList.remove('hidden');
+  document.getElementById('r-name').focus();
+}
+
+function closeModal() {
+  overlay.classList.add('hidden');
+  document.getElementById('create-recipe-form').reset();
+  document.getElementById('form-error').classList.add('hidden');
+}
+
+document.getElementById('btn-create-recipe').addEventListener('click', openModal);
+document.getElementById('modal-close').addEventListener('click', closeModal);
+overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+document.getElementById('create-recipe-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('r-name').value.trim();
+  if (!name) {
+    document.getElementById('form-error').classList.remove('hidden');
+    return;
+  }
+
+  const userRecipes = getUserRecipes();
+  const newRecipe = {
+    id: 'u_' + Date.now(),
+    name,
+    emoji:      document.getElementById('r-emoji').value.trim() || '🍽️',
+    cuisine:    document.getElementById('r-cuisine').value,
+    difficulty: document.getElementById('r-difficulty').value,
+    time:       document.getElementById('r-time').value.trim(),
+    userCreated: true,
+  };
+
+  userRecipes.unshift(newRecipe);
+  localStorage.setItem('userRecipes', JSON.stringify(userRecipes));
+
+  // Auto-save the new recipe
+  const saved = getSaved();
+  saved.push(newRecipe.id);
+  localStorage.setItem('savedRecipes', JSON.stringify(saved));
+
+  closeModal();
+  renderCards();
+});
+
+// ── Filters ──────────────────────────────────────────────
 document.getElementById('search').addEventListener('input', renderCards);
 document.getElementById('filter-cuisine').addEventListener('change', renderCards);
 document.getElementById('filter-difficulty').addEventListener('change', renderCards);
 
-document.getElementById('btn-add').addEventListener('click', () => {
-  alert('Add Recipe — coming soon!');
-});
+document.getElementById('btn-add').addEventListener('click', openModal);
 
 document.getElementById('btn-saved').addEventListener('click', () => {
-  alert('Saved Recipes — coming soon!');
+  window.location.href = 'saved.html';
 });
 
 renderCards();

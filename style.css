@@ -442,6 +442,119 @@ nav a.nav-active {
   transform: scale(1.2);
 }
 
+.btn-create {
+  margin-bottom: 1.5rem;
+}
+
+.btn-full {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.tag--custom {
+  color: var(--green);
+  border-color: var(--green);
+  background: var(--green-pale);
+  font-weight: 600;
+}
+
+/* ── Modal ───────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 1rem;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 2rem;
+  width: 100%;
+  max-width: 460px;
+  position: relative;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+}
+
+.modal h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--green);
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--muted);
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--text);
+  background: var(--green-pale);
+}
+
+#create-recipe-form label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  margin-top: 1rem;
+  color: var(--text);
+}
+
+#create-recipe-form label:first-of-type {
+  margin-top: 0;
+}
+
+#create-recipe-form input[type="text"],
+#create-recipe-form select {
+  width: 100%;
+  padding: 0.55rem 0.9rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  color: var(--text);
+  background: var(--white);
+  transition: border-color 0.2s;
+}
+
+#create-recipe-form input[type="text"]:focus,
+#create-recipe-form select:focus {
+  outline: none;
+  border-color: var(--green);
+}
+
+.field-hint {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.required {
+  color: #c0392b;
+}
+
+.form-error {
+  color: #c0392b;
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+}
+
 .no-results {
   text-align: center;
   color: var(--muted);
@@ -449,8 +562,116 @@ nav a.nav-active {
   font-size: 1rem;
 }
 
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.nav-active-btn {
+  background: var(--green-pale) !important;
+}
+
 .hidden {
   display: none;
+}
+
+/* ── About Page ─────────────────────────────────────────── */
+.about-hero {
+  background: var(--green-pale);
+  padding: 5rem 2.5rem;
+  text-align: center;
+}
+
+.about-hero-content h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.about-hero-content p {
+  font-size: 1.15rem;
+  color: var(--muted);
+}
+
+.about-section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 4rem 2.5rem;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.about-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.about-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(58, 125, 68, 0.1);
+}
+
+.about-icon {
+  font-size: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.about-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 0.5rem;
+}
+
+.about-card p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.about-cta {
+  text-align: center;
+  background: var(--green-pale);
+  padding: 4rem 2.5rem;
+}
+
+.about-cta h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.about-cta p {
+  color: var(--muted);
+  margin-bottom: 1.75rem;
+}
+
+.about-cta .hero-actions {
+  justify-content: center;
 }
 
 /* ── Footer ─────────────────────────────────────────────── */
