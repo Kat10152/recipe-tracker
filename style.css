@@ -356,6 +356,7 @@ nav a.nav-active {
   border-radius: var(--radius);
   padding: 1.1rem 1rem 1.1rem 1.25rem;
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  cursor: pointer;
 }
 
 .recipe-card:hover {
@@ -476,6 +477,8 @@ nav a.nav-active {
   padding: 2rem;
   width: 100%;
   max-width: 460px;
+  max-height: 88vh;
+  overflow-y: auto;
   position: relative;
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
 }
@@ -555,11 +558,172 @@ nav a.nav-active {
   margin-top: 0.75rem;
 }
 
+#create-recipe-form textarea {
+  width: 100%;
+  padding: 0.55rem 0.9rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--white);
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+#create-recipe-form textarea:focus {
+  outline: none;
+  border-color: var(--green);
+}
+
+/* ── Detail Modal ────────────────────────────────────────── */
+.modal--detail {
+  max-width: 580px;
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+.detail-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detail-emoji {
+  font-size: 3rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.detail-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.3px;
+}
+
+.detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.detail-description {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+}
+
+.detail-section {
+  margin-bottom: 1.25rem;
+}
+
+.detail-section h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-ingredients {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.detail-ingredients li::before {
+  content: '•';
+  color: var(--green);
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+.detail-ingredients li,
+.detail-steps li {
+  font-size: 0.92rem;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.detail-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-left: 1.25rem;
+}
+
+.detail-steps li {
+  padding-left: 0.25rem;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.detail-actions .detail-save-btn {
+  flex: 1;
+}
+
+.btn-delete {
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  color: #c0392b;
+  border: 1.5px solid #c0392b;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.btn-delete:hover {
+  background: #fdf0ef;
+}
+
+.detail-save-btn svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.detail-save-btn--saved {
+  background: var(--green-light) !important;
+}
+
+.detail-save-btn--saved svg {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
 .no-results {
   text-align: center;
   color: var(--muted);
   padding: 3rem 0;
   font-size: 1rem;
+}
+
+.saved-section-heading {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--green-pale);
+}
+
+#my-recipes-section,
+#saved-section {
+  margin-bottom: 2.5rem;
 }
 
 .empty-state {
@@ -589,6 +753,163 @@ nav a.nav-active {
 
 .hidden {
   display: none;
+}
+
+/* ── Section Shared ─────────────────────────────────────── */
+.section-subtitle {
+  color: var(--muted);
+  font-size: 1.05rem;
+  margin-bottom: 3rem;
+}
+
+/* ── How It Works ────────────────────────────────────────── */
+.how-it-works {
+  padding: 5rem 2.5rem;
+}
+
+.how-it-works-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.how-it-works h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.5px;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  text-align: left;
+}
+
+.step {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem 1.75rem;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.step:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(58, 125, 68, 0.1);
+}
+
+.step-number {
+  width: 2.25rem;
+  height: 2.25rem;
+  background: var(--green);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.step h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 0.5rem;
+}
+
+.step p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ── Cuisines ────────────────────────────────────────────── */
+.cuisines {
+  background: var(--green-pale);
+  padding: 5rem 2.5rem;
+  text-align: center;
+}
+
+.cuisines h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.5px;
+}
+
+.cuisines-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 0.75rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.cuisine-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+
+.cuisine-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(58, 125, 68, 0.12);
+  border-color: var(--green);
+}
+
+.cuisine-flag {
+  width: 56px;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  display: block;
+}
+
+.cuisine-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ── CTA Banner ──────────────────────────────────────────── */
+.cta-banner {
+  padding: 5rem 2.5rem;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cta-banner h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.5px;
+}
+
+.cta-banner p {
+  color: var(--muted);
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+}
+
+.cta-banner .hero-actions {
+  justify-content: center;
 }
 
 /* ── About Page ─────────────────────────────────────────── */
@@ -721,5 +1042,15 @@ nav a.nav-active {
   .navbar-actions {
     width: 100%;
     justify-content: flex-end;
+  }
+
+  .how-it-works,
+  .cuisines,
+  .cta-banner {
+    padding: 3rem 1.5rem;
+  }
+
+  .section-subtitle {
+    margin-top: -1rem;
   }
 }

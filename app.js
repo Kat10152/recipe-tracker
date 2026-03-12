@@ -20,7 +20,7 @@ document.querySelectorAll('.feature-card').forEach((card) => {
 
 // Hero buttons
 document.querySelector('.btn-primary').addEventListener('click', () => {
-  alert('Recipe Tracker is coming soon! Stay tuned.');
+  window.location.href = 'recipes.html';
 });
 
 document.querySelector('.btn-secondary').addEventListener('click', () => {
@@ -33,5 +33,5 @@ document.getElementById('btn-add').addEventListener('click', () => {
 });
 
 document.getElementById('btn-saved').addEventListener('click', () => {
-  alert('Saved Recipes — coming soon!');
+  window.location.href = 'saved.html';
 });

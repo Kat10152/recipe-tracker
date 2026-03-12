@@ -1,16 +1,4 @@
-// RECIPES loaded from data.js
-
-function getUserRecipes() {
-  return JSON.parse(localStorage.getItem('userRecipes') || '[]');
-}
-
-function getAllRecipes() {
-  return [...getUserRecipes(), ...RECIPES];
-}
-
-function getSaved() {
-  return JSON.parse(localStorage.getItem('savedRecipes') || '[]');
-}
+// getSaved, getUserRecipes, getAllRecipes loaded from data.js
 
 function toggleSave(id) {
   const saved = getSaved();
@@ -57,20 +45,20 @@ function renderCards() {
     const isSaved = saved.includes(r.id);
     const timeTag = r.time ? `<span class="tag">⏱ ${r.time}</span>` : '';
     return `
-      <div class="recipe-card ${isSaved ? 'recipe-card--saved' : ''}">
+      <div class="recipe-card ${isSaved ? 'recipe-card--saved' : ''}" onclick="openDetail('${r.id}')">
         <div class="recipe-card-emoji">${r.emoji || '🍽️'}</div>
         <div class="recipe-card-body">
           <h3 class="recipe-card-title">${r.name}</h3>
           <div class="recipe-card-tags">
             ${r.userCreated ? '<span class="tag tag--custom">My Recipe</span>' : ''}
             <span class="tag">${r.cuisine}</span>
-            <span class="tag tag--diff tag--${r.difficulty.toLowerCase()}">${r.difficulty}</span>
+            <span class="tag tag--${r.difficulty.toLowerCase()}">${r.difficulty}</span>
             ${timeTag}
           </div>
         </div>
         <button
           class="save-btn ${isSaved ? 'save-btn--saved' : ''}"
-          onclick="toggleSave('${r.id}')"
+          onclick="event.stopPropagation(); toggleSave('${r.id}')"
           title="${isSaved ? 'Remove from saved' : 'Save recipe'}"
           aria-label="${isSaved ? 'Remove from saved' : 'Save recipe'}"
         >${bookmarkSVG()}</button>
@@ -96,7 +84,9 @@ function closeModal() {
 document.getElementById('btn-create-recipe').addEventListener('click', openModal);
 document.getElementById('modal-close').addEventListener('click', closeModal);
 overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !overlay.classList.contains('hidden')) closeModal();
+});
 
 document.getElementById('create-recipe-form').addEventListener('submit', (e) => {
   e.preventDefault();
@@ -106,14 +96,21 @@ document.getElementById('create-recipe-form').addEventListener('submit', (e) => 
     return;
   }
 
+  const ingredientsRaw = document.getElementById('r-ingredients').value.trim();
+  const stepsRaw = document.getElementById('r-steps').value.trim();
+
   const userRecipes = getUserRecipes();
   const newRecipe = {
     id: 'u_' + Date.now(),
     name,
-    emoji:      document.getElementById('r-emoji').value.trim() || '🍽️',
-    cuisine:    document.getElementById('r-cuisine').value,
-    difficulty: document.getElementById('r-difficulty').value,
-    time:       document.getElementById('r-time').value.trim(),
+    emoji:        document.getElementById('r-emoji').value.trim() || '🍽️',
+    cuisine:      document.getElementById('r-cuisine').value,
+    difficulty:   document.getElementById('r-difficulty').value,
+    time:         document.getElementById('r-time').value.trim(),
+    servings:     document.getElementById('r-servings').value.trim(),
+    description:  document.getElementById('r-description').value.trim(),
+    ingredients:  ingredientsRaw ? ingredientsRaw.split('\n').map(l => l.trim()).filter(Boolean) : [],
+    steps:        stepsRaw ? stepsRaw.split('\n').map(l => l.trim()).filter(Boolean) : [],
     userCreated: true,
   };
 

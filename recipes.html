@@ -92,13 +92,34 @@
         <label for="r-time">Cook Time</label>
         <input type="text" id="r-time" placeholder="e.g. 30 min" maxlength="20" />
 
+        <label for="r-servings">Servings</label>
+        <input type="text" id="r-servings" placeholder="e.g. 4" maxlength="10" />
+
+        <label for="r-description">Description</label>
+        <textarea id="r-description" placeholder="A short description of the recipe..." rows="2"></textarea>
+
+        <label for="r-ingredients">Ingredients</label>
+        <textarea id="r-ingredients" placeholder="One ingredient per line&#10;e.g. 200g pasta&#10;2 garlic cloves" rows="5"></textarea>
+
+        <label for="r-steps">Instructions</label>
+        <textarea id="r-steps" placeholder="One step per line&#10;e.g. Boil water&#10;Cook pasta until al dente" rows="5"></textarea>
+
         <p class="form-error hidden" id="form-error">Please enter a recipe name.</p>
         <button type="submit" class="btn-primary btn-full">Save Recipe</button>
       </form>
     </div>
   </div>
 
+  <!-- Detail Modal -->
+  <div class="modal-overlay hidden" id="detail-overlay">
+    <div class="modal modal--detail">
+      <button class="modal-close" id="detail-close" aria-label="Close">&times;</button>
+      <div id="detail-content"></div>
+    </div>
+  </div>
+
   <script src="data.js"></script>
+  <script src="detail.js"></script>
   <script src="recipes.js"></script>
 </body>
 </html>

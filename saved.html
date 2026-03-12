@@ -28,7 +28,16 @@
     </section>
 
     <section class="recipes-grid-section">
-      <div class="recipes-grid" id="saved-grid"></div>
+
+      <div id="my-recipes-section" class="hidden">
+        <h2 class="saved-section-heading">My Recipes</h2>
+        <div class="recipes-grid" id="my-recipes-grid"></div>
+      </div>
+
+      <div id="saved-section" class="hidden">
+        <h2 class="saved-section-heading">Bookmarked Recipes</h2>
+        <div class="recipes-grid" id="saved-grid"></div>
+      </div>
 
       <div class="empty-state hidden" id="empty-state">
         <div class="empty-icon">🔖</div>
@@ -43,7 +52,16 @@
     <p>&copy; 2026 Recipe Tracker. Made with ❤️ for food lovers.</p>
   </footer>
 
+  <!-- Detail Modal -->
+  <div class="modal-overlay hidden" id="detail-overlay">
+    <div class="modal modal--detail">
+      <button class="modal-close" id="detail-close" aria-label="Close">&times;</button>
+      <div id="detail-content"></div>
+    </div>
+  </div>
+
   <script src="data.js"></script>
+  <script src="detail.js"></script>
   <script src="saved.js"></script>
 </body>
 </html>
