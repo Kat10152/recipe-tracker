@@ -1,3 +1,6 @@
+AI integration feature:
+This is a recipe tracker website with AI integration with a chat bot where users can ask for help with recipes. this makes the website more interactive for the user. It is running locally using Ollama.
+
 Project Description
 
 My website is a recipe tracker that allows users to search for recipes, save recipes, create custom recipes, and rate recipes they have tried. This will help users to keep track of their favorite recipes and also find new ones.
