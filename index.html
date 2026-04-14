@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recipe Tracker</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
   <header class="navbar">
@@ -100,17 +102,20 @@
           <div class="step">
             <div class="step-number">1</div>
             <h3>Browse the collection</h3>
-            <p>Explore 16 hand-picked recipes spanning 7 cuisines — from quick weeknight dinners to impressive weekend projects.</p>
+            <p>Explore 16 hand-picked recipes spanning 7 cuisines — from quick weeknight dinners to impressive weekend
+              projects.</p>
           </div>
           <div class="step">
             <div class="step-number">2</div>
             <h3>Save what you love</h3>
-            <p>Click the bookmark icon on any recipe to save it. Your saved recipes are stored in your browser and waiting for you whenever you return.</p>
+            <p>Click the bookmark icon on any recipe to save it. Your saved recipes are stored in your browser and
+              waiting for you whenever you return.</p>
           </div>
           <div class="step">
             <div class="step-number">3</div>
             <h3>Add your own</h3>
-            <p>Have a family recipe or a personal creation? Add it to your collection with ingredients, step-by-step instructions, and cook time.</p>
+            <p>Have a family recipe or a personal creation? Add it to your collection with ingredients, step-by-step
+              instructions, and cook time.</p>
           </div>
         </div>
       </div>
@@ -164,6 +169,7 @@
 
   </main>
 
+
   <footer class="footer">
     <p>&copy; 2026 Recipe Tracker. Made with ❤️ for food lovers.</p>
   </footer>
@@ -175,5 +181,34 @@
   <script src="db.js"></script>
   <script src="auth.js"></script>
   <script src="app.js"></script>
+
+  <!-- AI Chat Widget -->
+  <div id="chat-widget">
+    <button id="chat-toggle" aria-label="Open recipe assistant" aria-expanded="false">
+      <span class="chat-toggle-label">Need help?</span>
+      <span class="chat-toggle-icon">🍳</span>
+    </button>
+    <div id="chat-panel" hidden>
+      <div id="chat-header">
+        <div class="chat-header-title">
+          <span class="chat-header-icon">🍳</span>
+          <span>Recipe Assistant</span>
+        </div>
+        <button id="chat-close" aria-label="Close chat">✕</button>
+      </div>
+      <div id="chat-messages">
+        <div class="chat-message chat-message--assistant">
+          Hi! I'm your recipe assistant. Ask me anything about cooking, ingredients, or meal ideas!
+        </div>
+      </div>
+      <div id="chat-input-area">
+        <input id="chat-input" type="text" placeholder="Ask about recipes or cooking..." autocomplete="off" />
+        <button id="chat-send">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="chat.js"></script>
 </body>
+
 </html>

@@ -1,7 +1,27 @@
 {
   "name": "recipe-tracker",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "build": "node build.js"
-  }
+    "build": "node build.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "node-fetch": "^3.3.2"
+  },
+  "description": "Project Description",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kat10152/recipe-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kat10152/recipe-tracker/issues"
+  },
+  "homepage": "https://github.com/Kat10152/recipe-tracker#readme"
 }

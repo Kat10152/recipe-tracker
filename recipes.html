@@ -128,5 +128,33 @@
   <script src="data.js"></script>
   <script src="detail.js"></script>
   <script src="recipes.js"></script>
+
+  <!-- AI Chat Widget -->
+  <div id="chat-widget">
+    <button id="chat-toggle" aria-label="Open recipe assistant" aria-expanded="false">
+      <span class="chat-toggle-label">Need help?</span>
+      <span class="chat-toggle-icon">🍳</span>
+    </button>
+    <div id="chat-panel" hidden>
+      <div id="chat-header">
+        <div class="chat-header-title">
+          <span class="chat-header-icon">🍳</span>
+          <span>Recipe Assistant</span>
+        </div>
+        <button id="chat-close" aria-label="Close chat">✕</button>
+      </div>
+      <div id="chat-messages">
+        <div class="chat-message chat-message--assistant">
+          Hi! I'm your recipe assistant. Ask me anything about cooking, ingredients, or meal ideas!
+        </div>
+      </div>
+      <div id="chat-input-area">
+        <input id="chat-input" type="text" placeholder="Ask about recipes or cooking..." autocomplete="off" />
+        <button id="chat-send">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="chat.js"></script>
 </body>
 </html>
