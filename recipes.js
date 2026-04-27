@@ -18,10 +18,13 @@ function bookmarkSVG() {
   </svg>`;
 }
 
+const DIETARY_CLASS = { 'Vegan': 'vegan', 'Vegetarian': 'vegetarian', 'Gluten Free': 'gluten-free', 'Dairy Free': 'dairy-free' };
+
 function renderCards() {
   const query      = document.getElementById('search').value.toLowerCase();
   const cuisine    = document.getElementById('filter-cuisine').value;
   const difficulty = document.getElementById('filter-difficulty').value;
+  const dietary    = document.getElementById('filter-dietary').value;
   const saved      = getSaved();
   const ratings    = getRatings();
 
@@ -29,7 +32,8 @@ function renderCards() {
     const matchesSearch     = r.name.toLowerCase().includes(query) || r.cuisine.toLowerCase().includes(query);
     const matchesCuisine    = !cuisine    || r.cuisine    === cuisine;
     const matchesDifficulty = !difficulty || r.difficulty === difficulty;
-    return matchesSearch && matchesCuisine && matchesDifficulty;
+    const matchesDietary    = !dietary    || (r.dietary && r.dietary.includes(dietary));
+    return matchesSearch && matchesCuisine && matchesDifficulty && matchesDietary;
   });
 
   const grid      = document.getElementById('recipes-grid');
@@ -44,8 +48,9 @@ function renderCards() {
 
   grid.innerHTML = filtered.map(r => {
     const isSaved = saved.includes(r.id);
-    const timeTag = r.time ? `<span class="tag">⏱ ${r.time}</span>` : '';
-    const rating  = ratings[r.id] || 0;
+    const timeTag     = r.time ? `<span class="tag">⏱ ${r.time}</span>` : '';
+    const dietaryTags = (r.dietary || []).map(d => `<span class="tag tag--${DIETARY_CLASS[d] || ''}">${d}</span>`).join('');
+    const rating      = ratings[r.id] || 0;
     return `
       <div class="recipe-card ${isSaved ? 'recipe-card--saved' : ''}" onclick="openDetail('${r.id}')">
         <div class="recipe-card-emoji">${r.emoji || '🍽️'}</div>
@@ -56,6 +61,7 @@ function renderCards() {
             <span class="tag">${r.cuisine}</span>
             <span class="tag tag--${r.difficulty.toLowerCase()}">${r.difficulty}</span>
             ${timeTag}
+            ${dietaryTags}
           </div>
           ${rating ? `<div class="card-stars">${displayStarsHTML(rating)}</div>` : ''}
         </div>
@@ -102,6 +108,7 @@ document.getElementById('create-recipe-form').addEventListener('submit', (e) => 
 
   const ingredientsRaw = document.getElementById('r-ingredients').value.trim();
   const stepsRaw       = document.getElementById('r-steps').value.trim();
+  const dietary        = [...document.querySelectorAll('input[name="r-dietary"]:checked')].map(cb => cb.value);
 
   const newRecipe = {
     id:          'u_' + Date.now(),
@@ -114,6 +121,7 @@ document.getElementById('create-recipe-form').addEventListener('submit', (e) => 
     description: document.getElementById('r-description').value.trim(),
     ingredients: ingredientsRaw ? ingredientsRaw.split('\n').map(l => l.trim()).filter(Boolean) : [],
     steps:       stepsRaw       ? stepsRaw.split('\n').map(l => l.trim()).filter(Boolean)       : [],
+    dietary,
     userCreated: true,
   };
 
@@ -129,6 +137,7 @@ document.getElementById('create-recipe-form').addEventListener('submit', (e) => 
 document.getElementById('search').addEventListener('input', renderCards);
 document.getElementById('filter-cuisine').addEventListener('change', renderCards);
 document.getElementById('filter-difficulty').addEventListener('change', renderCards);
+document.getElementById('filter-dietary').addEventListener('change', renderCards);
 
 document.getElementById('btn-add').addEventListener('click', openModal);
 document.getElementById('btn-saved').addEventListener('click', () => {

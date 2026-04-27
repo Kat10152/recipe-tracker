@@ -660,12 +660,18 @@ nav a.nav-active {
   color: var(--text);
   background: var(--white);
   cursor: pointer;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.filter-select:hover {
+  border-color: var(--green);
+  background: var(--green-pale);
 }
 
 .filter-select:focus {
   outline: none;
   border-color: var(--green);
+  background: var(--green-pale);
 }
 
 /* ── Recipes Grid ────────────────────────────────────────── */
@@ -805,6 +811,62 @@ nav a.nav-active {
   border-color: var(--green);
   background: var(--green-pale);
   font-weight: 600;
+}
+
+.tag--vegan {
+  color: #1b5e20;
+  border-color: #4caf50;
+  background: #e8f5e9;
+}
+
+.tag--vegetarian {
+  color: #2e7d32;
+  border-color: #81c784;
+  background: #f1f8e9;
+}
+
+.tag--gluten-free {
+  color: #6a1b9a;
+  border-color: #ce93d8;
+  background: #f3e5f5;
+}
+
+.tag--dairy-free {
+  color: #1565c0;
+  border-color: #90caf9;
+  background: #e3f2fd;
+}
+
+/* ── Dietary Checkboxes (create form) ────────────────────── */
+.dietary-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.dietary-check {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.3rem 0.65rem;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+  user-select: none;
+}
+
+.dietary-check:has(input:checked) {
+  border-color: var(--green);
+  background: var(--green-pale);
+  color: var(--green);
+}
+
+.dietary-check input {
+  display: none;
 }
 
 /* ── Modal ───────────────────────────────────────────────── */

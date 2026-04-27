@@ -45,6 +45,13 @@
           <option value="Medium">Medium</option>
           <option value="Hard">Hard</option>
         </select>
+        <select id="filter-dietary" class="filter-select">
+          <option value="">All Diets</option>
+          <option value="Vegan">Vegan</option>
+          <option value="Vegetarian">Vegetarian</option>
+          <option value="Gluten Free">Gluten Free</option>
+          <option value="Dairy Free">Dairy Free</option>
+        </select>
       </div>
     </section>
 
@@ -89,6 +96,14 @@
           <option value="Medium">Medium</option>
           <option value="Hard">Hard</option>
         </select>
+
+        <label>Dietary</label>
+        <div class="dietary-checkboxes">
+          <label class="dietary-check"><input type="checkbox" name="r-dietary" value="Vegan"> Vegan</label>
+          <label class="dietary-check"><input type="checkbox" name="r-dietary" value="Vegetarian"> Vegetarian</label>
+          <label class="dietary-check"><input type="checkbox" name="r-dietary" value="Gluten Free"> Gluten Free</label>
+          <label class="dietary-check"><input type="checkbox" name="r-dietary" value="Dairy Free"> Dairy Free</label>
+        </div>
 
         <label for="r-time">Cook Time</label>
         <input type="text" id="r-time" placeholder="e.g. 30 min" maxlength="20" />
