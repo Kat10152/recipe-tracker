@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 const required = [
   'FIREBASE_API_KEY',
