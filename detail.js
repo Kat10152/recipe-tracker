@@ -48,8 +48,10 @@ function openDetail(id) {
 
   const isSaved    = getSaved().includes(id);
   const rating     = getRatings()[id] || 0;
-  const timeTag    = recipe.time     ? `<span class="tag">⏱ ${recipe.time}</span>`           : '';
+  const timeTag     = recipe.time     ? `<span class="tag">⏱ ${recipe.time}</span>`           : '';
   const servingsTag = recipe.servings ? `<span class="tag">🍽️ Serves ${recipe.servings}</span>` : '';
+  const dietaryTagClass = { 'Vegan': 'vegan', 'Vegetarian': 'vegetarian', 'Gluten Free': 'gluten-free', 'Dairy Free': 'dairy-free' };
+  const dietaryTags = (recipe.dietary || []).map(d => `<span class="tag tag--${dietaryTagClass[d] || ''}">${d}</span>`).join('');
 
   const ingredientsHTML = recipe.ingredients && recipe.ingredients.length
     ? `<section class="detail-section">
@@ -84,6 +86,7 @@ function openDetail(id) {
           <span class="tag tag--${recipe.difficulty.toLowerCase()}">${recipe.difficulty}</span>
           ${timeTag}
           ${servingsTag}
+          ${dietaryTags}
         </div>
       </div>
     </div>

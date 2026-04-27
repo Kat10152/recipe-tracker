@@ -12,9 +12,12 @@ function bookmarkSVG() {
   </svg>`;
 }
 
+const DIETARY_CLASS = { 'Vegan': 'vegan', 'Vegetarian': 'vegetarian', 'Gluten Free': 'gluten-free', 'Dairy Free': 'dairy-free' };
+
 function cardHTML(r) {
-  const timeTag = r.time ? `<span class="tag">⏱ ${r.time}</span>` : '';
-  const rating  = getRatings()[r.id] || 0;
+  const timeTag     = r.time ? `<span class="tag">⏱ ${r.time}</span>` : '';
+  const dietaryTags = (r.dietary || []).map(d => `<span class="tag tag--${DIETARY_CLASS[d] || ''}">${d}</span>`).join('');
+  const rating      = getRatings()[r.id] || 0;
   return `
     <div class="recipe-card recipe-card--saved" onclick="openDetail('${r.id}')">
       <div class="recipe-card-emoji">${r.emoji || '🍽️'}</div>
@@ -24,6 +27,7 @@ function cardHTML(r) {
           <span class="tag">${r.cuisine}</span>
           <span class="tag tag--${r.difficulty.toLowerCase()}">${r.difficulty}</span>
           ${timeTag}
+          ${dietaryTags}
         </div>
         ${rating ? `<div class="card-stars">${displayStarsHTML(rating)}</div>` : ''}
       </div>
