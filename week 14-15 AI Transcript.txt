@@ -1,0 +1,985 @@
+ ▐▛███▜▌   Claude Code v2.1.119
+▝▜█████▛▘  Sonnet 4.6 · Claude Pro
+  ▘▘ ▝▝    ~\recipetracker
+
+  Opus 4.7 xhigh is now available! · /model to switch
+
+> can you add a feature that lets users filter by dietary restrictions like     
+  gluten free, vegan, vegitarian, etc.                                          
+
+● Let me read the current project files to understand what we're working with.
+
+  Read 3 files (ctrl+o to expand)
+
+● Now let me check the recipes page to see the existing filter setup and recipe
+  data.
+
+  Searched for 2 patterns, read 2 files (ctrl+o to expand)
+
+● Now let me read the recipes.js to understand the filtering logic.
+
+  Read 1 file (ctrl+o to expand)
+
+● I have a clear picture of everything. Here's my plan:
+  1. Add dietary arrays to all 16 recipes in data.js
+  2. Add a dietary filter dropdown to recipes.html + dietary checkboxes in the
+  create form
+  3. Update recipes.js to filter by dietary and save the field on new recipes
+  4. Add CSS for the dietary tags
+
+  Starting with all the changes now.
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+      1  const RECIPES = [
+      2    {
+      3 -    id: '1', emoji: '🍝', name: 'Spaghetti Carbonara', time: '30
+        - min', difficulty: 'Easy', cuisine: 'Italian', servings: 2,     
+      3 +    id: '1', emoji: '🍝', name: 'Spaghetti Carbonara', time: '30
+        + min', difficulty: 'Easy', cuisine: 'Italian', servings: 2, diet
+        +ary: [],                                                        
+      4      description: 'A rich and creamy Roman classic made with eggs
+         , cured pork, and aged cheese — no cream needed.',
+      5      ingredients: ['200g spaghetti', '100g pancetta or guanciale'
+         , '2 large eggs + 1 yolk', '50g Pecorino Romano, grated', '50g P
+         armesan, grated', 'Freshly ground black pepper', 'Salt for pasta
+          water'],
+      6      steps: ['Bring a large pot of salted water to a boil and coo
+         k spaghetti until al dente.', 'Fry pancetta in a pan over medium
+          heat until crispy, then remove from heat.', 'Whisk together egg
+         s, yolk, and both cheeses in a bowl with a generous amount of bl
+         ack pepper.', 'Reserve a cup of pasta water, then drain the past
+         a and add it to the pan with pancetta off the heat.', 'Pour the 
+         egg mixture over the pasta, tossing quickly and adding pasta wat
+         er little by little until creamy.', 'Serve immediately with extr
+         a cheese and black pepper.'],
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+       6      steps: ['Bring a large pot of salted water to a boil and co
+          ok spaghetti until al dente.', 'Fry pancetta in a pan over medi
+          um heat until crispy, then remove from heat.', 'Whisk together 
+          eggs, yolk, and both cheeses in a bowl with a generous amount o
+          f black pepper.', 'Reserve a cup of pasta water, then drain the
+           pasta and add it to the pan with pancetta off the heat.', 'Pou
+          r the egg mixture over the pasta, tossing quickly and adding pa
+          sta water little by little until creamy.', 'Serve immediately w
+          ith extra cheese and black pepper.'],
+       7    },
+       8    {
+       9 -    id: '2', emoji: '🍜', name: 'Ramen Noodle Soup', time: '45 
+         -min', difficulty: 'Medium', cuisine: 'Japanese', servings: 2,  
+       9 +    id: '2', emoji: '🍜', name: 'Ramen Noodle Soup', time: '45 
+         +min', difficulty: 'Medium', cuisine: 'Japanese', servings: 2, d
+         +ietary: ['Dairy Free'],                                        
+      10      description: 'A deeply savoury Japanese noodle soup with a 
+          rich broth, soft-boiled egg, and tender pork.',
+      11      ingredients: ['2 portions ramen noodles', '1 litre chicken 
+          or pork broth', '2 tbsp soy sauce', '1 tbsp miso paste', '200g 
+          chashu pork belly (or cooked chicken)', '2 soft-boiled eggs', '
+          2 spring onions, sliced', '1 sheet nori', '1 tsp sesame oil', '
+          Bean sprouts (optional)'],
+      12      steps: ['Bring broth to a simmer and stir in soy sauce, mis
+          o paste, and sesame oil.', 'Cook ramen noodles according to pac
+          ket instructions, then drain.', 'Slice pork belly and warm thro
+          ugh in the broth.', 'Divide noodles between two bowls and ladle
+           hot broth over them.', 'Top with pork, halved soft-boiled egg,
+           spring onions, nori, and bean sprouts.', 'Serve immediately wh
+          ile hot.'],
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+      12      steps: ['Bring broth to a simmer and stir in soy sauce, mis
+          o paste, and sesame oil.', 'Cook ramen noodles according to pac
+          ket instructions, then drain.', 'Slice pork belly and warm thro
+          ugh in the broth.', 'Divide noodles between two bowls and ladle
+           hot broth over them.', 'Top with pork, halved soft-boiled egg,
+           spring onions, nori, and bean sprouts.', 'Serve immediately wh
+          ile hot.'],
+      13    },
+      14    {
+      15 -    id: '3', emoji: '🥗', name: 'Caesar Salad', time: '15 min',
+         - difficulty: 'Easy', cuisine: 'American', servings: 2,         
+      15 +    id: '3', emoji: '🥗', name: 'Caesar Salad', time: '15 min',
+         + difficulty: 'Easy', cuisine: 'American', servings: 2, dietary:
+         + [],                                                           
+      16      description: 'A timeless salad with crisp romaine, crunchy 
+          croutons, and a tangy anchovy-spiked dressing.',
+      17      ingredients: ['1 large romaine lettuce, chopped', '50g Parm
+          esan, shaved', '1 cup croutons', '3 tbsp mayonnaise', '1 tbsp l
+          emon juice', '1 tsp Worcestershire sauce', '1 tsp Dijon mustard
+          ', '1 garlic clove, minced', '2 anchovy fillets (optional)', 'B
+          lack pepper'],
+      18      steps: ['Whisk together mayo, lemon juice, Worcestershire, 
+          mustard, garlic, and anchovies to make the dressing.', 'Wash an
+          d dry romaine leaves, then tear or chop into bite-sized pieces.
+          ', 'Toss lettuce with the dressing until well coated.', 'Add cr
+          outons and most of the Parmesan and toss again.', 'Top with rem
+          aining Parmesan and a crack of black pepper. Serve immediately.
+          '],
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+      18      steps: ['Whisk together mayo, lemon juice, Worcestershire, 
+          mustard, garlic, and anchovies to make the dressing.', 'Wash an
+          d dry romaine leaves, then tear or chop into bite-sized pieces.
+          ', 'Toss lettuce with the dressing until well coated.', 'Add cr
+          outons and most of the Parmesan and toss again.', 'Top with rem
+          aining Parmesan and a crack of black pepper. Serve immediately.
+          '],
+      19    },
+      20    {
+      21 -    id: '4', emoji: '🌮', name: 'Beef Tacos', time: '25 min', d
+         -ifficulty: 'Easy', cuisine: 'Mexican', servings: 4,            
+      21 +    id: '4', emoji: '🌮', name: 'Beef Tacos', time: '25 min', d
+         +ifficulty: 'Easy', cuisine: 'Mexican', servings: 4, dietary: []
+         +,                                                              
+      22      description: 'Juicy seasoned beef in warm tortillas with fr
+          esh toppings — a crowd-pleasing weeknight favourite.',
+      23      ingredients: ['500g beef mince', '8 small flour or corn tor
+          tillas', '1 tbsp olive oil', '1 tsp cumin', '1 tsp smoked papri
+          ka', '½ tsp garlic powder', '½ tsp chilli flakes', 'Salt and pe
+          pper', 'Toppings: shredded lettuce, diced tomato, grated cheese
+          , sour cream, lime wedges, fresh coriander'],
+      24      steps: ['Heat oil in a pan over medium-high heat. Add beef 
+          mince and cook, breaking it up, until browned.', 'Drain excess 
+          fat, then add cumin, paprika, garlic powder, chilli flakes, sal
+          t and pepper. Stir well.', 'Add a splash of water and cook for 
+          2 more minutes until fragrant.', 'Warm tortillas in a dry pan o
+          r microwave.', 'Fill tortillas with beef and your choice of top
+          pings. Serve with lime wedges.'],
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+      24      steps: ['Heat oil in a pan over medium-high heat. Add beef 
+          mince and cook, breaking it up, until browned.', 'Drain excess 
+          fat, then add cumin, paprika, garlic powder, chilli flakes, sal
+          t and pepper. Stir well.', 'Add a splash of water and cook for 
+          2 more minutes until fragrant.', 'Warm tortillas in a dry pan o
+          r microwave.', 'Fill tortillas with beef and your choice of top
+          pings. Serve with lime wedges.'],
+      25    },
+      26    {
+      27 -    id: '5', emoji: '🍛', name: 'Chicken Tikka Masala', time: '
+         -50 min', difficulty: 'Medium', cuisine: 'Indian', servings: 4, 
+      27 +    id: '5', emoji: '🍛', name: 'Chicken Tikka Masala', time: '
+         +50 min', difficulty: 'Medium', cuisine: 'Indian', servings: 4, 
+         +dietary: ['Gluten Free'],                                      
+      28      description: 'Tender marinated chicken in a rich, spiced to
+          mato and cream sauce — one of the world\'s most loved curries.'
+          ,
+      29      ingredients: ['600g chicken breast, cubed', '200ml plain yo
+          ghurt', '2 tsp garam masala', '1 tsp turmeric', '1 tsp cumin', 
+          '1 tbsp vegetable oil', '1 onion, finely chopped', '3 garlic cl
+          oves, minced', '1 tbsp grated ginger', '400g tin chopped tomato
+          es', '150ml double cream', 'Fresh coriander to serve', 'Salt'],
+      30      steps: ['Mix yoghurt with half the spices and salt. Add chi
+          cken, coat well, and marinate for at least 30 minutes.', 'Grill
+           or pan-fry the marinated chicken until charred and cooked thro
+          ugh. Set aside.', 'Heat oil in a pan, fry onion until golden, t
+          hen add garlic and ginger and cook 2 minutes.', 'Add remaining 
+          spices, stir for 1 minute, then pour in tomatoes. Simmer for 10
+           minutes.', 'Stir in cream and add the cooked chicken. Simmer f
+          or 5 minutes.', 'Garnish with fresh coriander and serve with ri
+          ce or naan.'],
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+      30      steps: ['Mix yoghurt with half the spices and salt. Add chi
+          cken, coat well, and marinate for at least 30 minutes.', 'Grill
+           or pan-fry the marinated chicken until charred and cooked thro
+          ugh. Set aside.', 'Heat oil in a pan, fry onion until golden, t
+          hen add garlic and ginger and cook 2 minutes.', 'Add remaining 
+          spices, stir for 1 minute, then pour in tomatoes. Simmer for 10
+           minutes.', 'Stir in cream and add the cooked chicken. Simmer f
+          or 5 minutes.', 'Garnish with fresh coriander and serve with ri
+          ce or naan.'],
+      31    },
+      32    {
+      33 -    id: '6', emoji: '🍕', name: 'Margherita Pizza', time: '40 m
+         -in', difficulty: 'Medium', cuisine: 'Italian', servings: 2,    
+      33 +    id: '6', emoji: '🍕', name: 'Margherita Pizza', time: '40 m
+         +in', difficulty: 'Medium', cuisine: 'Italian', servings: 2, die
+         +tary: ['Vegetarian'],                                          
+      34      description: 'A classic Neapolitan pizza with a crispy base
+          , sweet tomato sauce, fresh mozzarella, and basil.',
+      35      ingredients: ['300g pizza dough (store-bought or homemade)'
+          , '150ml passata', '1 tsp dried oregano', '1 garlic clove, minc
+          ed', '150g fresh mozzarella, torn', 'Handful fresh basil leaves
+          ', '2 tbsp olive oil', 'Salt and pepper'],
+      36      steps: ['Preheat oven to its highest setting (250°C+) with 
+          a baking tray inside.', 'Mix passata with garlic, oregano, salt
+          , and 1 tbsp olive oil to make the sauce.', 'Stretch or roll th
+          e dough on a floured surface to a thin round.', 'Spread sauce o
+          ver the base, leaving a border for the crust.', 'Scatter mozzar
+          ella over the top and drizzle with remaining oil.', 'Slide onto
+           the hot baking tray and bake for 8–12 minutes until crust is g
+          olden and cheese is bubbling.', 'Top with fresh basil and serve
+           immediately.'],
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+      36      steps: ['Preheat oven to its highest setting (250°C+) with 
+          a baking tray inside.', 'Mix passata with garlic, oregano, salt
+          , and 1 tbsp olive oil to make the sauce.', 'Stretch or roll th
+          e dough on a floured surface to a thin round.', 'Spread sauce o
+          ver the base, leaving a border for the crust.', 'Scatter mozzar
+          ella over the top and drizzle with remaining oil.', 'Slide onto
+           the hot baking tray and bake for 8–12 minutes until crust is g
+          olden and cheese is bubbling.', 'Top with fresh basil and serve
+           immediately.'],
+      37    },
+      38    {
+      39 -    id: '7', emoji: '🥘', name: 'Pad Thai', time: '30 min', dif
+         -ficulty: 'Medium', cuisine: 'Thai', servings: 2,               
+      39 +    id: '7', emoji: '🥘', name: 'Pad Thai', time: '30 min', dif
+         +ficulty: 'Medium', cuisine: 'Thai', servings: 2, dietary: ['Glu
+         +ten Free', 'Dairy Free'],                                      
+      40      description: 'Thailand\'s favourite stir-fried noodle dish 
+          — sweet, savoury, and tangy with a satisfying crunch.',
+      41      ingredients: ['200g flat rice noodles', '200g prawns or chi
+          cken, sliced', '2 eggs', '3 tbsp fish sauce', '2 tbsp tamarind 
+          paste', '1 tbsp sugar', '2 tbsp vegetable oil', '3 spring onion
+          s, chopped', '2 garlic cloves, minced', '100g bean sprouts', 'C
+          rushed peanuts, lime wedges, chilli flakes to serve'],
+      42      steps: ['Soak rice noodles in warm water for 20 minutes, th
+          en drain.', 'Mix fish sauce, tamarind paste, and sugar together
+           in a small bowl.', 'Heat oil in a wok over high heat. Add garl
+          ic, then protein and stir-fry until cooked.', 'Push to the side
+          , crack in eggs and scramble until just set, then mix together.
+          ', 'Add noodles and sauce. Toss everything together over high h
+          eat for 2 minutes.', 'Add bean sprouts and spring onions, toss 
+          briefly.', 'Serve with crushed peanuts, lime wedges, and chilli
+           flakes on the side.'],
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+      42      steps: ['Soak rice noodles in warm water for 20 minutes, th
+          en drain.', 'Mix fish sauce, tamarind paste, and sugar together
+           in a small bowl.', 'Heat oil in a wok over high heat. Add garl
+          ic, then protein and stir-fry until cooked.', 'Push to the side
+          , crack in eggs and scramble until just set, then mix together.
+          ', 'Add noodles and sauce. Toss everything together over high h
+          eat for 2 minutes.', 'Add bean sprouts and spring onions, toss 
+          briefly.', 'Serve with crushed peanuts, lime wedges, and chilli
+           flakes on the side.'],
+      43    },
+      44    {
+      45 -    id: '8', emoji: '🥩', name: 'Classic Beef Burger', time: '2
+         -0 min', difficulty: 'Easy', cuisine: 'American', servings: 2,  
+      45 +    id: '8', emoji: '🥩', name: 'Classic Beef Burger', time: '2
+         +0 min', difficulty: 'Easy', cuisine: 'American', servings: 2, d
+         +ietary: [],                                                    
+      46      description: 'A juicy homemade beef patty with all the clas
+          sic toppings in a toasted brioche bun.',
+      47      ingredients: ['400g beef mince (20% fat)', '2 brioche burge
+          r buns', '2 slices cheddar cheese', 'Lettuce leaves', '2 tomato
+           slices', '2 tbsp burger sauce or mayo', 'Ketchup and mustard',
+           'Salt and pepper'],
+      48      steps: ['Divide mince into two balls, season generously wit
+          h salt and pepper, then press into patties slightly wider than 
+          the buns.', 'Heat a griddle or pan over very high heat. Cook pa
+          tties for 3–4 minutes each side for medium.', 'Add cheese in th
+          e last minute of cooking and cover to melt.', 'Toast the buns c
+          ut-side down in the same pan.', 'Spread sauce on the base bun, 
+          add lettuce and tomato, then the patty, then ketchup and mustar
+          d.', 'Top and serve immediately.'],
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+      48      steps: ['Divide mince into two balls, season generously wit
+          h salt and pepper, then press into patties slightly wider than 
+          the buns.', 'Heat a griddle or pan over very high heat. Cook pa
+          tties for 3–4 minutes each side for medium.', 'Add cheese in th
+          e last minute of cooking and cover to melt.', 'Toast the buns c
+          ut-side down in the same pan.', 'Spread sauce on the base bun, 
+          add lettuce and tomato, then the patty, then ketchup and mustar
+          d.', 'Top and serve immediately.'],
+      49    },
+      50    {
+      51 -    id: '9', emoji: '🍣', name: 'Salmon Sushi Rolls', time: '60
+         - min', difficulty: 'Hard', cuisine: 'Japanese', servings: 4,   
+      51 +    id: '9', emoji: '🍣', name: 'Salmon Sushi Rolls', time: '60
+         + min', difficulty: 'Hard', cuisine: 'Japanese', servings: 4, di
+         +etary: ['Gluten Free', 'Dairy Free'],                          
+      52      description: 'Homemade maki rolls filled with fresh salmon,
+           cucumber, and avocado — impressive and satisfying to make.',
+      53      ingredients: ['300g sushi rice', '360ml water', '3 tbsp ric
+          e vinegar', '1 tbsp sugar', '1 tsp salt', '4 nori sheets', '200
+          g sashimi-grade salmon, sliced', '1 avocado, sliced', '½ cucumb
+          er, cut into strips', 'Soy sauce, wasabi, pickled ginger to ser
+          ve'],
+      54      steps: ['Cook sushi rice with water, then mix with rice vin
+          egar, sugar, and salt while still warm. Fan to cool.', 'Place a
+           nori sheet shiny-side down on a bamboo mat. Spread a thin, eve
+          n layer of rice, leaving a 2cm gap at the far edge.', 'Lay salm
+          on, avocado, and cucumber in a line across the near edge of the
+           rice.', 'Using the mat, roll tightly away from you, pressing f
+          irmly. Seal the edge with a little water.', 'Using a sharp wet 
+          knife, slice the roll into 6–8 pieces with a single clean motio
+          n.', 'Serve with soy sauce, wasabi, and pickled ginger.'],
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+      54      steps: ['Cook sushi rice with water, then mix with rice vin
+          egar, sugar, and salt while still warm. Fan to cool.', 'Place a
+           nori sheet shiny-side down on a bamboo mat. Spread a thin, eve
+          n layer of rice, leaving a 2cm gap at the far edge.', 'Lay salm
+          on, avocado, and cucumber in a line across the near edge of the
+           rice.', 'Using the mat, roll tightly away from you, pressing f
+          irmly. Seal the edge with a little water.', 'Using a sharp wet 
+          knife, slice the roll into 6–8 pieces with a single clean motio
+          n.', 'Serve with soy sauce, wasabi, and pickled ginger.'],
+      55    },
+      56    {
+      57 -    id: '10', emoji: '🥐', name: 'Croissants', time: '3 hrs', d
+         -ifficulty: 'Hard', cuisine: 'French', servings: 8,             
+      57 +    id: '10', emoji: '🥐', name: 'Croissants', time: '3 hrs', d
+         +ifficulty: 'Hard', cuisine: 'French', servings: 8, dietary: ['V
+         +egetarian'],                                                   
+      58      description: 'Flaky, buttery, golden croissants made from s
+          cratch — a true labour of love with an incredible reward.',
+      59      ingredients: ['500g strong white flour', '10g salt', '80g s
+          ugar', '10g instant yeast', '300ml warm milk', '30g softened bu
+          tter (for dough)', '280g cold unsalted butter (for lamination)'
+          , '1 egg, beaten (for egg wash)'],
+      60      steps: ['Mix flour, salt, sugar, yeast, milk, and softened 
+          butter into a dough. Knead 5 minutes, then chill overnight.', '
+          Beat cold butter into a flat square between baking paper. Keep 
+          cold but pliable.', 'Roll dough into a large rectangle, place b
+          utter block in the centre, and fold dough over to encase it.', 
+          'Roll out and fold into thirds (like a letter). Chill 30 minute
+          s. Repeat this process 3 more times.', 'Roll dough to 5mm thick
+           and cut into long triangles. Roll each triangle from base to t
+          ip.', 'Place on a lined tray, brush with egg wash, and prove fo
+          r 2 hours until puffy.', 'Brush again with egg wash and bake at
+           200°C for 15–18 minutes until deep golden brown.'],
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+      60      steps: ['Mix flour, salt, sugar, yeast, milk, and softened 
+          butter into a dough. Knead 5 minutes, then chill overnight.', '
+          Beat cold butter into a flat square between baking paper. Keep 
+          cold but pliable.', 'Roll dough into a large rectangle, place b
+          utter block in the centre, and fold dough over to encase it.', 
+          'Roll out and fold into thirds (like a letter). Chill 30 minute
+          s. Repeat this process 3 more times.', 'Roll dough to 5mm thick
+           and cut into long triangles. Roll each triangle from base to t
+          ip.', 'Place on a lined tray, brush with egg wash, and prove fo
+          r 2 hours until puffy.', 'Brush again with egg wash and bake at
+           200°C for 15–18 minutes until deep golden brown.'],
+      61    },
+      62    {
+      63 -    id: '11', emoji: '🌯', name: 'Chicken Burrito Bowl', time: 
+         -'35 min', difficulty: 'Easy', cuisine: 'Mexican', servings: 2, 
+      63 +    id: '11', emoji: '🌯', name: 'Chicken Burrito Bowl', time: 
+         +'35 min', difficulty: 'Easy', cuisine: 'Mexican', servings: 2, 
+         +dietary: ['Gluten Free'],                                      
+      64      description: 'A vibrant, filling bowl with spiced chicken, 
+          rice, black beans, and all your favourite toppings.',
+      65      ingredients: ['2 chicken breasts', '1 tsp cumin', '1 tsp sm
+          oked paprika', '½ tsp garlic powder', '200g cooked rice', '400g
+           tin black beans, drained', '1 avocado, diced', '100g corn (tin
+          ned or fresh)', 'Salsa', 'Sour cream', 'Lime juice', 'Fresh cor
+          iander', 'Salt and olive oil'],
+      66      steps: ['Toss chicken in cumin, paprika, garlic powder, sal
+          t, and a drizzle of oil.', 'Cook chicken in a pan over medium-h
+          igh heat for 5–6 minutes each side until cooked through. Rest t
+          hen slice.', 'Warm black beans in a small pan with a pinch of s
+          alt.', 'Build the bowls: start with rice, then add beans, corn,
+           avocado, and sliced chicken.', 'Top with salsa, sour cream, an
+          d fresh coriander. Squeeze lime over everything before eating.'
+          ],
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+      66      steps: ['Toss chicken in cumin, paprika, garlic powder, sal
+          t, and a drizzle of oil.', 'Cook chicken in a pan over medium-h
+          igh heat for 5–6 minutes each side until cooked through. Rest t
+          hen slice.', 'Warm black beans in a small pan with a pinch of s
+          alt.', 'Build the bowls: start with rice, then add beans, corn,
+           avocado, and sliced chicken.', 'Top with salsa, sour cream, an
+          d fresh coriander. Squeeze lime over everything before eating.'
+          ],
+      67    },
+      68    {
+      69 -    id: '12', emoji: '🍲', name: 'Lentil Dal', time: '40 min', 
+         -difficulty: 'Easy', cuisine: 'Indian', servings: 4,            
+      69 +    id: '12', emoji: '🍲', name: 'Lentil Dal', time: '40 min', 
+         +difficulty: 'Easy', cuisine: 'Indian', servings: 4, dietary: ['
+         +Vegan', 'Vegetarian', 'Gluten Free', 'Dairy Free'],            
+      70      description: 'A comforting, fragrant Indian lentil stew tha
+          t is hearty, nutritious, and packed with spice.',
+      71      ingredients: ['300g red lentils, rinsed', '1 litre vegetabl
+          e stock', '1 onion, finely chopped', '3 garlic cloves, minced',
+           '1 tbsp grated ginger', '400g tin chopped tomatoes', '1 tsp tu
+          rmeric', '1 tsp cumin', '1 tsp coriander', '½ tsp chilli powder
+          ', '2 tbsp vegetable oil', 'Salt', 'Fresh coriander and naan to
+           serve'],
+      72      steps: ['Heat oil in a large pot. Fry onion until soft, the
+          n add garlic and ginger and cook 2 minutes.', 'Add all spices a
+          nd stir for 1 minute until fragrant.', 'Pour in tomatoes and co
+          ok for 5 minutes, stirring occasionally.', 'Add lentils and sto
+          ck. Bring to a boil, then simmer uncovered for 25 minutes until
+           lentils are very soft.', 'Season with salt and adjust spices t
+          o taste. Add water if too thick.', 'Serve topped with fresh cor
+          iander alongside naan or rice.'],
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+      72      steps: ['Heat oil in a large pot. Fry onion until soft, the
+          n add garlic and ginger and cook 2 minutes.', 'Add all spices a
+          nd stir for 1 minute until fragrant.', 'Pour in tomatoes and co
+          ok for 5 minutes, stirring occasionally.', 'Add lentils and sto
+          ck. Bring to a boil, then simmer uncovered for 25 minutes until
+           lentils are very soft.', 'Season with salt and adjust spices t
+          o taste. Add water if too thick.', 'Serve topped with fresh cor
+          iander alongside naan or rice.'],
+      73    },
+      74    {
+      75 -    id: '13', emoji: '🍝', name: 'Pesto Pasta', time: '20 min',
+         - difficulty: 'Easy', cuisine: 'Italian', servings: 2,          
+      75 +    id: '13', emoji: '🍝', name: 'Pesto Pasta', time: '20 min',
+         + difficulty: 'Easy', cuisine: 'Italian', servings: 2, dietary: 
+         +['Vegetarian'],                                                
+      76      description: 'A quick and vibrant pasta with homemade basil
+           pesto — simple ingredients, incredible flavour.',
+      77      ingredients: ['200g pasta (linguine or spaghetti)', 'Large 
+          bunch fresh basil', '50g pine nuts, lightly toasted', '50g Parm
+          esan, grated', '1 garlic clove', '80ml extra virgin olive oil',
+           'Juice of ½ lemon', 'Salt and pepper'],
+      78      steps: ['Cook pasta in well-salted boiling water until al d
+          ente. Reserve a cup of pasta water before draining.', 'Blend ba
+          sil, pine nuts, Parmesan, garlic, lemon juice, and olive oil in
+           a food processor until smooth. Season well.', 'Toss drained pa
+          sta with pesto, adding pasta water a splash at a time to loosen
+           to a silky consistency.', 'Serve with extra Parmesan and a dri
+          zzle of olive oil.'],
+
+● Update(data.js)  ⎿  Added 1 line, removed 1 line
+      78      steps: ['Cook pasta in well-salted boiling water until al d
+          ente. Reserve a cup of pasta water before draining.', 'Blend ba
+          sil, pine nuts, Parmesan, garlic, lemon juice, and olive oil in
+           a food processor until smooth. Season well.', 'Toss drained pa
+          sta with pesto, adding pasta water a splash at a time to loosen
+           to a silky consistency.', 'Serve with extra Parmesan and a dri
+          zzle of olive oil.'],
+      79    },
+      80    {
+      81 -    id: '14', emoji: '🦞', name: 'Lobster Bisque', time: '1 hr'
+         -, difficulty: 'Hard', cuisine: 'French', servings: 4,          
+      81 +    id: '14', emoji: '🦞', name: 'Lobster Bisque', time: '1 hr'
+         +, difficulty: 'Hard', cuisine: 'French', servings: 4, dietary: 
+         +['Gluten Free'],                                               
+      82      description: 'An elegant, velvety French soup with rich lob
+          ster flavour — perfect for a special occasion.',
+      83      ingredients: ['2 cooked lobster tails', '1 onion, chopped',
+           '2 celery stalks, chopped', '1 carrot, chopped', '3 garlic clo
+          ves', '2 tbsp tomato purée', '100ml brandy or dry sherry', '500
+          ml fish stock', '400ml double cream', '2 tbsp butter', '1 tsp p
+          aprika', 'Salt, pepper, fresh tarragon'],
+      84      steps: ['Melt butter in a large pot. Sauté onion, celery, a
+          nd carrot until soft. Add garlic and cook 1 minute.', 'Stir in 
+          tomato purée and paprika, cook 2 minutes. Add brandy and let it
+           bubble for 1 minute.', 'Pour in fish stock and bring to a simm
+          er for 20 minutes.', 'Blend the soup until completely smooth, t
+          hen strain through a fine sieve back into the pot.', 'Stir in c
+          ream and season. Simmer gently for 10 minutes.', 'Slice lobster
+           tail meat, warm briefly in the bisque, and serve with fresh ta
+          rragon and crusty bread.'],
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+      84      steps: ['Melt butter in a large pot. Sauté onion, celery, a
+          nd carrot until soft. Add garlic and cook 1 minute.', 'Stir in 
+          tomato purée and paprika, cook 2 minutes. Add brandy and let it
+           bubble for 1 minute.', 'Pour in fish stock and bring to a simm
+          er for 20 minutes.', 'Blend the soup until completely smooth, t
+          hen strain through a fine sieve back into the pot.', 'Stir in c
+          ream and season. Simmer gently for 10 minutes.', 'Slice lobster
+           tail meat, warm briefly in the bisque, and serve with fresh ta
+          rragon and crusty bread.'],
+      85    },
+      86    {
+      87 -    id: '15', emoji: '🍜', name: 'Green Curry', time: '35 min',
+         - difficulty: 'Medium', cuisine: 'Thai', servings: 4,           
+      87 +    id: '15', emoji: '🍜', name: 'Green Curry', time: '35 min',
+         + difficulty: 'Medium', cuisine: 'Thai', servings: 4, dietary: [
+         +'Gluten Free', 'Dairy Free'],                                  
+      88      description: 'A fragrant, creamy Thai green curry with a fr
+          esh herbal heat balanced by coconut milk.',
+      89      ingredients: ['500g chicken breast or tofu, cubed', '2 tbsp
+           green curry paste', '400ml coconut milk', '200ml chicken or ve
+          getable stock', '1 tbsp vegetable oil', '1 tbsp fish sauce', '1
+           tsp sugar', '100g green beans, trimmed', '1 courgette, sliced'
+          , 'Handful Thai basil leaves', 'Lime juice, jasmine rice to ser
+          ve'],
+      90      steps: ['Heat oil in a wok or deep pan over medium heat. Ad
+          d curry paste and fry for 1–2 minutes until fragrant.', 'Add co
+          conut milk and stock and bring to a gentle simmer.', 'Add chick
+          en (or tofu) and cook for 10 minutes until cooked through.', 'S
+          eason with fish sauce and sugar. Add green beans and courgette,
+           cook 5 more minutes.', 'Finish with Thai basil leaves and a sq
+          ueeze of lime. Serve with jasmine rice.'],
+
+● Update(data.js)
+  ⎿  Added 1 line, removed 1 line
+      90      steps: ['Heat oil in a wok or deep pan over medium heat. Ad
+          d curry paste and fry for 1–2 minutes until fragrant.', 'Add co
+          conut milk and stock and bring to a gentle simmer.', 'Add chick
+          en (or tofu) and cook for 10 minutes until cooked through.', 'S
+          eason with fish sauce and sugar. Add green beans and courgette,
+           cook 5 more minutes.', 'Finish with Thai basil leaves and a sq
+          ueeze of lime. Serve with jasmine rice.'],
+      91    },
+      92    {
+      93 -    id: '16', emoji: '🧆', name: 'Falafel Wrap', time: '30 min'
+         -, difficulty: 'Medium', cuisine: 'American', servings: 2,      
+      93 +    id: '16', emoji: '🧆', name: 'Falafel Wrap', time: '30 min'
+         +, difficulty: 'Medium', cuisine: 'American', servings: 2, dieta
+         +ry: ['Vegan', 'Vegetarian', 'Dairy Free'],                     
+      94      description: 'Crispy herby falafel in a warm flatbread with
+           hummus, pickles, and a zesty tahini drizzle.',
+      95      ingredients: ['400g tin chickpeas, drained', '1 small onion
+          , roughly chopped', '2 garlic cloves', 'Large handful parsley a
+          nd coriander', '1 tsp cumin', '1 tsp coriander powder', '3 tbsp
+           flour', 'Salt and pepper', 'Oil for frying', '2 flatbreads or 
+          wraps', '3 tbsp hummus', 'Sliced cucumber and tomato', 'Pickled
+           red onion', '2 tbsp tahini mixed with lemon juice and water'],
+      96      steps: ['Blend chickpeas, onion, garlic, herbs, and spices 
+          in a food processor until a rough paste forms. Do not over-blen
+          d.', 'Stir in flour and season well. Chill the mixture for 20 m
+          inutes.', 'Shape into small balls or patties and shallow-fry in
+           hot oil for 3–4 minutes each side until deep golden.', 'Warm f
+          latbreads and spread with hummus.', 'Fill with falafel, cucumbe
+          r, tomato, and pickled onion. Drizzle with tahini sauce and wra
+          p tightly.'],
+
+● Now add the dietary filter dropdown and form checkboxes to recipes.html.
+
+● Update(recipes.html)
+  ⎿  Added 7 lines
+      45            <option value="Medium">Medium</option>
+      46            <option value="Hard">Hard</option>
+      47          </select>
+      48 +        <select id="filter-dietary" class="filter-select">     
+      49 +          <option value="">All Diets</option>                  
+      50 +          <option value="Vegan">Vegan</option>                 
+      51 +          <option value="Vegetarian">Vegetarian</option>       
+      52 +          <option value="Gluten Free">Gluten Free</option>     
+      53 +          <option value="Dairy Free">Dairy Free</option>       
+      54 +        </select>                                              
+      55        </div>
+      56      </section>
+      57  
+
+● Now add dietary checkboxes to the create recipe form, right after the
+  difficulty field.
+
+● Update(recipes.html)
+  ⎿  Added 8 lines
+       97            <option value="Hard">Hard</option>
+       98          </select>
+       99  
+      100 +        <label>Dietary</label>                                
+      101 +        <div class="dietary-checkboxes">                      
+      102 +          <label class="dietary-check"><input type="checkbox" 
+          +name="r-dietary" value="Vegan"> Vegan</label>                 
+      103 +          <label class="dietary-check"><input type="checkbox" 
+          +name="r-dietary" value="Vegetarian"> Vegetarian</label>       
+      104 +          <label class="dietary-check"><input type="checkbox" 
+          +name="r-dietary" value="Gluten Free"> Gluten Free</label>     
+      105 +          <label class="dietary-check"><input type="checkbox" 
+          +name="r-dietary" value="Dairy Free"> Dairy Free</label>       
+      106 +        </div>                                                
+      107 +                                                              
+      108          <label for="r-time">Cook Time</label>
+      109          <input type="text" id="r-time" placeholder="e.g. 30 mi
+           n" maxlength="20" />
+      110  
+
+● Now update recipes.js to wire up the dietary filter and save it on new
+  recipes.
+
+● Update(recipes.js)
+  ⎿  Added 5 lines, removed 1 line
+      18    </svg>`;
+      19  }
+      20  
+      21 +const DIETARY_CLASS = { 'Vegan': 'vegan', 'Vegetarian': 'vegeta
+         +rian', 'Gluten Free': 'gluten-free', 'Dairy Free': 'dairy-free'
+         + };                                                            
+      22 +                                                               
+      23  function renderCards() {
+      24    const query      = document.getElementById('search').value.to
+          LowerCase();
+      25    const cuisine    = document.getElementById('filter-cuisine').
+          value;
+      26    const difficulty = document.getElementById('filter-difficulty
+          ').value;
+      27 +  const dietary    = document.getElementById('filter-dietary').
+         +value;                                                         
+      28    const saved      = getSaved();
+      29    const ratings    = getRatings();
+      30  
+     ...
+      32      const matchesSearch     = r.name.toLowerCase().includes(que
+          ry) || r.cuisine.toLowerCase().includes(query);
+      33      const matchesCuisine    = !cuisine    || r.cuisine    === c
+          uisine;
+      34      const matchesDifficulty = !difficulty || r.difficulty === d
+          ifficulty;
+      32 -    return matchesSearch && matchesCuisine && matchesDifficulty
+         -;                                                              
+      35 +    const matchesDietary    = !dietary    || (r.dietary && r.di
+         +etary.includes(dietary));                                      
+      36 +    return matchesSearch && matchesCuisine && matchesDifficulty
+         + && matchesDietary;                                            
+      37    });
+      38  
+      39    const grid      = document.getElementById('recipes-grid');
+
+● Now add dietary tags to the card render and wire up the filter event listener.
+
+● Update(recipes.js)
+  ⎿  Added 3 lines, removed 2 lines
+      48  
+      49    grid.innerHTML = filtered.map(r => {
+      50      const isSaved = saved.includes(r.id);
+      51 -    const timeTag = r.time ? `<span class="tag">⏱ ${r.time}</sp
+         -an>` : '';                                                     
+      52 -    const rating  = ratings[r.id] || 0;                        
+      51 +    const timeTag     = r.time ? `<span class="tag">⏱ ${r.time}
+         +</span>` : '';                                                 
+      52 +    const dietaryTags = (r.dietary || []).map(d => `<span class
+         +="tag tag--${DIETARY_CLASS[d] || ''}">${d}</span>`).join('');  
+      53 +    const rating      = ratings[r.id] || 0;                    
+      54      return `
+      55        <div class="recipe-card ${isSaved ? 'recipe-card--saved' 
+          : ''}" onclick="openDetail('${r.id}')">
+      56          <div class="recipe-card-emoji">${r.emoji || '🍽️'}</div>
+
+● Update(recipes.js)
+  ⎿  Added 1 line
+      61              <span class="tag">${r.cuisine}</span>
+      62              <span class="tag tag--${r.difficulty.toLowerCase()}
+          ">${r.difficulty}</span>
+      63              ${timeTag}
+      64 +            ${dietaryTags}                                     
+      65            </div>
+      66            ${rating ? `<div class="card-stars">${displayStarsHTM
+          L(rating)}</div>` : ''}
+      67          </div>
+
+● Now update the form submit to capture dietary checkboxes.
+
+● Update(recipes.js)
+  ⎿  Added 1 line
+      108  
+      109    const ingredientsRaw = document.getElementById('r-ingredient
+           s').value.trim();
+      110    const stepsRaw       = document.getElementById('r-steps').va
+           lue.trim();
+      111 +  const dietary        = [...document.querySelectorAll('input[
+          +name="r-dietary"]:checked')].map(cb => cb.value);             
+      112  
+      113    const newRecipe = {
+      114      id:          'u_' + Date.now(),
+
+● Update(recipes.js)
+  ⎿  Added 1 line
+      121      description: document.getElementById('r-description').valu
+           e.trim(),
+      122      ingredients: ingredientsRaw ? ingredientsRaw.split('\n').m
+           ap(l => l.trim()).filter(Boolean) : [],
+      123      steps:       stepsRaw       ? stepsRaw.split('\n').map(l =
+           > l.trim()).filter(Boolean)       : [],
+      124 +    dietary,                                                  
+      125      userCreated: true,
+      126    };
+      127  
+
+● Now add the event listener for the new dietary filter.
+
+● Update(recipes.js)
+  ⎿  Added 1 line
+      137  document.getElementById('search').addEventListener('input', re
+           nderCards);
+      138  document.getElementById('filter-cuisine').addEventListener('ch
+           ange', renderCards);
+      139  document.getElementById('filter-difficulty').addEventListener(
+           'change', renderCards);
+      140 +document.getElementById('filter-dietary').addEventListener('ch
+          +ange', renderCards);                                          
+      141  
+      142  document.getElementById('btn-add').addEventListener('click', o
+           penModal);
+      143  document.getElementById('btn-saved').addEventListener('click',
+            () => {
+
+● Now add all the CSS — dietary tag colours and the styled pill checkboxes.
+
+● Update(style.css)
+  ⎿  Added 56 lines
+      807    font-weight: 600;
+      808  }
+      809  
+      810 +.tag--vegan {                                                 
+      811 +  color: #1b5e20;                                             
+      812 +  border-color: #4caf50;                                      
+      813 +  background: #e8f5e9;                                        
+      814 +}                                                             
+      815 +                                                              
+      816 +.tag--vegetarian {                                            
+      817 +  color: #2e7d32;                                             
+      818 +  border-color: #81c784;                                      
+      819 +  background: #f1f8e9;                                        
+      820 +}                                                             
+      821 +                                                              
+      822 +.tag--gluten-free {                                           
+      823 +  color: #6a1b9a;                                             
+      824 +  border-color: #ce93d8;                                      
+      825 +  background: #f3e5f5;                                        
+      826 +}                                                             
+      827 +                                                              
+      828 +.tag--dairy-free {                                            
+      829 +  color: #1565c0;                                             
+      830 +  border-color: #90caf9;                                      
+      831 +  background: #e3f2fd;                                        
+      832 +}                                                             
+      833 +                                                              
+      834 +/* ── Dietary Checkboxes (create form) ────────────────────── 
+          +*/                                                            
+      835 +.dietary-checkboxes {                                         
+      836 +  display: flex;                                              
+      837 +  flex-wrap: wrap;                                            
+      838 +  gap: 0.5rem;                                                
+      839 +  margin-top: 0.3rem;                                         
+      840 +}                                                             
+      841 +                                                              
+      842 +.dietary-check {                                              
+      843 +  display: flex;                                              
+      844 +  align-items: center;                                        
+      845 +  gap: 0.3rem;                                                
+      846 +  font-size: 0.85rem;                                         
+      847 +  font-weight: 500;                                           
+      848 +  cursor: pointer;                                            
+      849 +  padding: 0.3rem 0.65rem;                                    
+      850 +  border: 1.5px solid var(--border);                          
+      851 +  border-radius: 20px;                                        
+      852 +  transition: border-color 0.15s, background 0.15s, color 0.15
+          +s;                                                            
+      853 +  user-select: none;                                          
+      854 +}                                                             
+      855 +                                                              
+      856 +.dietary-check:has(input:checked) {                           
+      857 +  border-color: var(--green);                                 
+      858 +  background: var(--green-pale);                              
+      859 +  color: var(--green);                                        
+      860 +}                                                             
+      861 +                                                              
+      862 +.dietary-check input {                                        
+      863 +  display: none;                                              
+      864 +}                                                             
+      865 +                                                              
+      866  /* ── Modal ───────────────────────────────────────────────── 
+           */
+      867  .modal-overlay {
+      868    position: fixed;
+
+● All changes are in. Here's a summary of what was added:
+
+  Filter on the Recipes page — a new "All Diets" dropdown sits alongside the
+  existing cuisine and difficulty filters, letting users pick Vegan, Vegetarian,
+   Gluten Free, or Dairy Free.
+
+  Tags on recipe cards — each recipe now shows colour-coded dietary tags at a
+  glance:
+  - 🟢 Vegan / Vegetarian — green shades
+  - 🟣 Gluten Free — purple
+  - 🔵 Dairy Free — blue
+
+  Create Your Own Recipe form — four pill-style checkboxes let you mark your own
+   recipes with any dietary tags; they turn green when selected.
+
+  Pre-tagged built-in recipes — all 16 recipes have been tagged based on their
+  ingredients (e.g. Lentil Dal gets all four tags, Margherita Pizza is
+  Vegetarian, Pad Thai is Gluten Free + Dairy Free, etc.).
+
+✻ Crunched for 3m 52s
+
+> can you add a slight color change when hovering over the buttons for all      
+  cuisines, all levels, and all diets so that it is more obvious that it is a   
+  button                                                                        
+
+  Searched for 2 patterns (ctrl+o to expand)
+
+● Update(style.css)
+  ⎿  Added 7 lines, removed 1 line
+      660    color: var(--text);
+      661    background: var(--white);
+      662    cursor: pointer;
+      663 -  transition: border-color 0.2s;                              
+      663 +  transition: border-color 0.2s, background 0.2s;             
+      664  }
+      665  
+      666 +.filter-select:hover {                                        
+      667 +  border-color: var(--green);                                 
+      668 +  background: var(--green-pale);                              
+      669 +}                                                             
+      670 +                                                              
+      671  .filter-select:focus {
+      672    outline: none;
+      673    border-color: var(--green);
+      674 +  background: var(--green-pale);                              
+      675  }
+      676  
+      677  /* ── Recipes Grid ────────────────────────────────────────── 
+           */
+
+● Done. The three filter dropdowns now get a green border and a light green
+  background tint on hover, matching the existing green theme and making it
+  clear they're interactive.
+
+> can you push these changes with the description "project polish (dietary      
+  restrictions feature)"                                                        
+● Bash(git status && git diff)
+  ⎿  On branch main
+     Your branch is up to date with 'origin/main'.
+     … +375 lines (ctrl+o to expand)
+
+● Everything looks good. Committing and pushing now.
+
+● Bash(git add data.js recipes.html recipes.js style.css && git commit -m "$(cat
+       <<'EOF'
+      project polish (dietary restrictions feature)…)
+  ⎿  warning: in the working copy of 'data.js', LF will be replaced by CRLF
+      the next time Git touches it
+     warning: in the working copy of 'recipes.html', LF will be replaced by
+     … +7 lines (ctrl+o to expand)
+
+● Bash(git push)
+  ⎿  To https://github.com/Kat10152/recipe-tracker
+        7445eb0..d86e113  main -> main
+
+● Pushed. Commit d86e113 is now live on main.
+
+> can you test the site for any errors or bugs and explain them to me           
+
+● I'll do a thorough code review across all the JS files to look for bugs.
+
+  Read 6 files (ctrl+o to expand)
+
+● I've read through all the JS files. Here's what I found — two real bugs I
+  introduced with the dietary feature, plus one pre-existing issue:
+
+  ---
+  Bug 1 — Dietary tags missing from the detail modal (detail.js:51–87)
+  When you click any recipe to open the full detail view, the dietary tags
+  (Vegan, Gluten Free, etc.) don't appear, even though they show on the recipe
+  card. The openDetail function in detail.js was never updated to include them.
+
+  Bug 2 — Dietary tags missing from the Saved page (saved.js:16)
+  The Saved Recipes page has its own cardHTML() function separate from
+  recipes.js, and it wasn't updated either — so saved recipe cards don't show
+  dietary tags.
+
+  Bug 3 — XSS in user-created recipes (detail.js:58, recipes.js:53)
+  Recipe names, descriptions, ingredients, and steps typed into the "Create Your
+   Own Recipe" form are injected directly into the DOM as raw HTML with no
+  sanitization. If someone typed something like <img src=x onerror="alert(1)">
+  as a recipe name, it would execute. Since this is a personal single-user app
+  the real-world risk is low, but it's a genuine code flaw.
+
+  ---
+  Bugs 1 and 2 are straightforward fixes — want me to patch them now?
+
+✻ Churned for 1m 9s
+
+> yes please                                                                    
+
+● Fixing both now.
+
+● Update(detail.js)
+  ⎿  Added 3 lines, removed 1 line
+      48  
+      49    const isSaved    = getSaved().includes(id);
+      50    const rating     = getRatings()[id] || 0;
+      51 -  const timeTag    = recipe.time     ? `<span class="tag">⏱ ${r
+         -ecipe.time}</span>`           : '';                            
+      51 +  const timeTag     = recipe.time     ? `<span class="tag">⏱ ${
+         +recipe.time}</span>`           : '';                           
+      52    const servingsTag = recipe.servings ? `<span class="tag">🍽️ Se
+          rves ${recipe.servings}</span>` : '';
+      53 +  const dietaryTagClass = { 'Vegan': 'vegan', 'Vegetarian': 've
+         +getarian', 'Gluten Free': 'gluten-free', 'Dairy Free': 'dairy-f
+         +ree' };                                                        
+      54 +  const dietaryTags = (recipe.dietary || []).map(d => `<span cl
+         +ass="tag tag--${dietaryTagClass[d] || ''}">${d}</span>`).join('
+         +');                                                            
+      55  
+      56    const ingredientsHTML = recipe.ingredients && recipe.ingredie
+          nts.length
+      57      ? `<section class="detail-section">
+
+● Update(detail.js)
+  ⎿  Added 1 line
+      86            <span class="tag tag--${recipe.difficulty.toLowerCase
+          ()}">${recipe.difficulty}</span>
+      87            ${timeTag}
+      88            ${servingsTag}
+      89 +          ${dietaryTags}                                       
+      90          </div>
+      91        </div>
+      92      </div>
+
+● Now fix saved.js:
+
+● Update(saved.js)
+  ⎿  Added 6 lines, removed 2 lines
+      12    </svg>`;
+      13  }
+      14  
+      15 +const DIETARY_CLASS = { 'Vegan': 'vegan', 'Vegetarian': 'vegeta
+         +rian', 'Gluten Free': 'gluten-free', 'Dairy Free': 'dairy-free'
+         + };                                                            
+      16 +                                                               
+      17  function cardHTML(r) {
+      16 -  const timeTag = r.time ? `<span class="tag">⏱ ${r.time}</span
+         ->` : '';                                                       
+      17 -  const rating  = getRatings()[r.id] || 0;                     
+      18 +  const timeTag     = r.time ? `<span class="tag">⏱ ${r.time}</
+         +span>` : '';                                                   
+      19 +  const dietaryTags = (r.dietary || []).map(d => `<span class="
+         +tag tag--${DIETARY_CLASS[d] || ''}">${d}</span>`).join('');    
+      20 +  const rating      = getRatings()[r.id] || 0;                 
+      21    return `
+      22      <div class="recipe-card recipe-card--saved" onclick="openDe
+          tail('${r.id}')">
+      23        <div class="recipe-card-emoji">${r.emoji || '🍽️'}</div>
+     ...
+      27            <span class="tag">${r.cuisine}</span>
+      28            <span class="tag tag--${r.difficulty.toLowerCase()}">
+          ${r.difficulty}</span>
+      29            ${timeTag}
+      30 +          ${dietaryTags}                                       
+      31          </div>
+      32          ${rating ? `<div class="card-stars">${displayStarsHTML(
+          rating)}</div>` : ''}
+      33        </div>
+
+● Both fixed. Dietary tags now show consistently in all three places — recipe
+  cards, the detail modal, and the saved page.
+
+✻ Sautéed for 39s
+
+> push these big fixes please                                                   
+
+● Bash(git add detail.js saved.js && git commit -m "$(cat <<'EOF'
+      fix: show dietary tags in detail modal and saved page cards…)
+  ⎿  warning: in the working copy of 'detail.js', LF will be replaced by CR
+     LF the next time Git touches it
+     warning: in the working copy of 'saved.js', LF will be replaced by CRL
+     … +6 lines (ctrl+o to expand)
+
+● Done — commit e652c30 pushed to main.
